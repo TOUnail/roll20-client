@@ -128,6 +128,8 @@ module.exports = {
         800: "#97266d",
         900: "#702459",
       },
+      primary: "#78387B",
+      secondary: "#80B02A",
     },
     spacing: {
       px: "1px",
