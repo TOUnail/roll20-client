@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 const Post = (props) => {
-  console.log(props);
+  dayjs.extend(relativeTime);
   const {
     post: {
       body,
@@ -29,7 +31,7 @@ const Post = (props) => {
               <Link to={`/users/${userHandle}`}>{userHandle}</Link> rolled a{" "}
               {roll}
             </p>
-            <p className="text-gray-600">{createdAt}</p>
+            <p className="text-gray-600">{dayjs(createdAt).fromNow()}</p>
             <p>{body}</p>
           </div>
         </div>
