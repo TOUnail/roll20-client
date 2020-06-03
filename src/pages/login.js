@@ -35,6 +35,8 @@ const Login = (props) => {
         setLoading(false);
         throw new Error(json);
       }
+      localStorage.setItem("FBIdToken", `Bearer ${json.token}`);
+      setLoading(false);
       props.history.push("/");
     } catch (err) {
       console.log(err);
