@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Store from "./context/Store";
 import jwtDecode from "jwt-decode";
 // Components
 import Navbar from "./components/Navbar";
@@ -13,7 +14,7 @@ let authenticated;
 const token = localStorage.FBIdToken;
 if (token) {
   const decodedToken = jwtDecode(token);
-  console.log(decodedToken);
+  //console.log(decodedToken);
   if (decodedToken * 1000 < Date.now()) {
     window.location.href = "/login";
     authenticated = false;
@@ -24,7 +25,7 @@ if (token) {
 
 function App() {
   return (
-    <div className="App">
+    <Store>
       <Router>
         <Switch>
           <Route exact path="/">
@@ -45,7 +46,7 @@ function App() {
           />
         </Switch>
       </Router>
-    </div>
+    </Store>
   );
 }
 
