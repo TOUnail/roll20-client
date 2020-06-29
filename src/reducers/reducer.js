@@ -14,6 +14,23 @@ const UserReducer = (state, action) => {
         authenticated: true,
         ...action.payload,
       };
+    case "SET_ERRORS":
+      return {
+        ...state,
+        loading: false,
+        errors: action.payload,
+      };
+    case "CLEAR_ERRORS":
+      return {
+        ...state,
+        loading: false,
+        errors: null,
+      };
+    case "LOADING_UI":
+      return {
+        ...state,
+        loading: true,
+      };
     default:
       return state;
   }

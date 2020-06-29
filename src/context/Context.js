@@ -1,10 +1,5 @@
 import { createContext } from "react";
 
-let Context = createContext({
-  authenticated: false,
-  credentials: {},
-  likes: [],
-  notifications: [],
-});
+let Context = createContext();
 
 export default Context;

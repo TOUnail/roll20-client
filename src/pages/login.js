@@ -6,11 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiceD20 } from "@fortawesome/pro-regular-svg-icons/faDiceD20";
 
 const Login = (props) => {
-  const errorData = {};
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState(errorData);
   const login = useContext(Context);
 
   const handleSubmit = async (e) => {
@@ -19,36 +16,7 @@ const Login = (props) => {
       email: email,
       password: password,
     };
-    //console.log(JSON.stringify(userData));
     login.loginUser(userData, props.history);
-    //   setLoading(true);
-    //   const userData = {
-    //     email: email,
-    //     password: password,
-    //   };
-
-    //   try {
-    //     const response = await fetch("/login", {
-    //       credentials: "include",
-    //       method: "post",
-    //       headers: {
-    //         Accept: "application/json",
-    //         "Content-Type": "application/json;charset=UTF-8",
-    //       },
-    //       body: JSON.stringify(userData),
-    //     });
-    //     const json = await response.json();
-    //     if (!response.ok) {
-    //       setErrors(json);
-    //       setLoading(false);
-    //       throw new Error(json);
-    //     }
-    //     localStorage.setItem("FBIdToken", `Bearer ${json.token}`);
-    //     setLoading(false);
-    //     props.history.push("/");
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
   };
 
   return (
@@ -81,7 +49,7 @@ const Login = (props) => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className={errors.general ? "mb-2" : "mb-8"}>
+              <div className={context.errors ? "mb-2" : "mb-8"}>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="password"
@@ -91,9 +59,9 @@ const Login = (props) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              {errors.general && (
+              {context.errors && (
                 <p className="text-center text-red-500 text-xs italic mb-2">
-                  {errors.general}
+                  {context.errors.general}
                 </p>
               )}
               <button
@@ -103,9 +71,9 @@ const Login = (props) => {
                     : "bg-primary-700"
                 }`}
                 type="submit"
-                disabled={email === "" || password === "" || loading}
+                disabled={email === "" || password === "" || context.loading}
               >
-                {!loading ? (
+                {!context.loading ? (
                   "Sign In"
                 ) : (
                   <FontAwesomeIcon icon={faDiceD20} spin />
