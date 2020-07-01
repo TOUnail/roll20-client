@@ -1,31 +1,39 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import UserReducer from "../reducers/reducer";
 import Context from "./Context";
 
-let loggedIn;
-const token = localStorage.FBIdToken;
-if (token) {
-  const decodedToken = jwtDecode(token);
-  if (decodedToken * 1000 < Date.now()) {
-    loggedIn = false;
-  } else {
-    loggedIn = true;
-  }
-} else {
-  loggedIn = false;
-}
 const initialState = {
-  authenticated: loggedIn,
+  authenticated: false,
   credentials: {},
   likes: [],
   notifications: [],
-  loading: false,
+  loadingData: false,
+  loadingUI: false,
   errors: {},
 };
 
 const Store = ({ children }) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
+  useEffect(() => {
+    const token = localStorage.FBIdToken;
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken * 1000 < Date.now()) {
+        logoutUser();
+        window.location.href = "/login";
+      } else {
+        dispatch({ type: "SET_AUTHENTICATED" });
+        new Headers().append("Authorization", token);
+        getUserData(token);
+      }
+    }
+  }, []);
+  const setAuthorizationHeader = (token) => {
+    const FBIdToken = `Bearer ${token}`;
+    localStorage.setItem("FBIdToken", FBIdToken);
+    new Headers().append("Authorization", FBIdToken);
+  };
   const loginUser = async (userData, history) => {
     try {
       dispatch({ type: "LOADING_UI" });
@@ -44,17 +52,19 @@ const Store = ({ children }) => {
         return Promise.reject(json);
       }
       dispatch({ type: "SET_AUTHENTICATED" });
-      const FBIdToken = `Bearer ${json.token}`;
-      localStorage.setItem("FBIdToken", FBIdToken);
-      new Headers().append("Authorization", FBIdToken);
-      getUserData(FBIdToken);
+      setAuthorizationHeader(json.token);
+      getUserData(`Bearer ${json.token}`);
       //setLoading(false);
       history.push("/");
     } catch (err) {
       console.log(err);
     }
   };
-
+  const logoutUser = () => {
+    localStorage.removeItem("FBIdToken");
+    new Headers().delete("Authorization");
+    dispatch({ type: "SET_UNAUTHENTICATED" });
+  };
   const signupUser = async (newUserData, history) => {
     try {
       dispatch({ type: "LOADING_UI" });
@@ -72,8 +82,9 @@ const Store = ({ children }) => {
         dispatch({ type: "SET_ERRORS", payload: json });
         return Promise.reject(json);
       }
-      localStorage.setItem("FBIdToken", `Bearer ${json.token}`);
       dispatch({ type: "SET_AUTHENTICATED" });
+      setAuthorizationHeader(json.token);
+      getUserData(`Bearer ${json.token}`);
       history.push("/");
     } catch (err) {
       console.log(err);
@@ -81,6 +92,7 @@ const Store = ({ children }) => {
   };
   const getUserData = async (token) => {
     try {
+      dispatch({ type: "LOADING_USER" });
       const response = await fetch("/user", {
         credentials: "include",
         method: "get",
@@ -94,7 +106,6 @@ const Store = ({ children }) => {
       response
         .json()
         .then((res) => {
-          console.log(res);
           dispatch({
             type: "SET_USER",
             payload: res,
@@ -113,13 +124,17 @@ const Store = ({ children }) => {
     credentials: state.credentials,
     likes: state.likes,
     notifications: state.notifications,
-    loading: state.loading,
+    loadingUI: state.loadingUI,
+    loadingData: state.loadingData,
     errors: state.errors,
     loginUser: (userData, props) => {
       loginUser(userData, props);
     },
     signupUser: (newUserData, props) => {
       signupUser(newUserData, props);
+    },
+    logoutUser: () => {
+      logoutUser();
     },
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;

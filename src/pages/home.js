@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Post from "../components/Post";
+import Profile from "../components/Profile";
 
 const Home = () => {
   const [hasError, setErrors] = useState(false);
@@ -21,7 +22,7 @@ const Home = () => {
 
   return (
     <div className="container">
-      <div className="grid grid-cols-1 md:grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="col-span-1 md:col-span-2">
           {data ? (
             data.map((post) => <Post key={post.postId} post={post} />)
@@ -29,7 +30,9 @@ const Home = () => {
             <p>Loading...</p>
           )}
         </div>
-        <div className="col-span-1">.col-span-1</div>
+        <div className="col-span-1">
+          <Profile />
+        </div>
       </div>
     </div>
   );
