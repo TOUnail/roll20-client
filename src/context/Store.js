@@ -19,7 +19,7 @@ const Store = ({ children }) => {
     const token = localStorage.FBIdToken;
     if (token) {
       const decodedToken = jwtDecode(token);
-      if (decodedToken * 1000 < Date.now()) {
+      if (decodedToken.exp * 1000 < Date.now()) {
         logoutUser();
         window.location.href = "/login";
       } else {
@@ -51,10 +51,9 @@ const Store = ({ children }) => {
         dispatch({ type: "SET_ERRORS", payload: json });
         return Promise.reject(json);
       }
-      dispatch({ type: "SET_AUTHENTICATED" });
       setAuthorizationHeader(json.token);
       getUserData(`Bearer ${json.token}`);
-      //setLoading(false);
+      dispatch({ type: "CLEAR_ERRORS" });
       history.push("/");
     } catch (err) {
       console.log(err);
