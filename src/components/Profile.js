@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import Context from "../context/Context";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-regular-svg-icons/faSpinner";
+import { faCameraAlt } from "@fortawesome/pro-solid-svg-icons/faCameraAlt";
 
 const Profile = () => {
+  const profile = useContext(Context);
+  const handleImageChange = (e) => {
+    const image = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+    profile.uploadImage(formData);
+  };
+  const handleEditPicture = () => {
+    const fileInput = document.getElementById("imageInput");
+    fileInput.click();
+  };
   return (
     <Context.Consumer>
       {(context) =>
@@ -13,11 +25,29 @@ const Profile = () => {
           context.authenticated ? (
             <div className="w-full">
               <div className="shadow bg-white p-4 my-2 sm:rounded-lg flex flex-col justify-between leading-normal">
-                <img
-                  src={context.credentials.imageUrl}
-                  alt="profile"
-                  className="rounded-full w-20 h-20 mx-auto mb-2"
-                />
+                <div className="relative">
+                  <img
+                    src={context.credentials.imageUrl}
+                    alt="profile"
+                    className="rounded-full w-20 h-20 mx-auto mb-2"
+                  />
+                  <input
+                    type="file"
+                    id="imageInput"
+                    hidden="hidden"
+                    onChange={handleImageChange}
+                  />
+                  <button
+                    onClick={handleEditPicture}
+                    className="focus:outline-none absolute"
+                    style={{ left: "48%", bottom: "0.5rem" }}
+                  >
+                    <FontAwesomeIcon
+                      className="text-gray-700"
+                      icon={faCameraAlt}
+                    />
+                  </button>
+                </div>
                 <div className="text-center">
                   <h2 className="text-lg">
                     <strong>{context.credentials.handle}</strong>

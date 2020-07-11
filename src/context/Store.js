@@ -118,6 +118,25 @@ const Store = ({ children }) => {
     }
   };
 
+  const uploadImage = async (formData) => {
+    try {
+      dispatch({ type: "LOADING_USER" });
+      const token = localStorage.FBIdToken;
+      await fetch("/user/image", {
+        credentials: "include",
+        method: "post",
+        headers: {
+          Authorization: token,
+        },
+        body: formData,
+      }).then(() => {
+        getUserData(token);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const value = {
     authenticated: state.authenticated,
     credentials: state.credentials,
@@ -131,6 +150,9 @@ const Store = ({ children }) => {
     },
     signupUser: (newUserData, props) => {
       signupUser(newUserData, props);
+    },
+    uploadImage: (formData) => {
+      uploadImage(formData);
     },
     logoutUser: () => {
       logoutUser();

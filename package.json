@@ -5,11 +5,12 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.29",
     "@fortawesome/pro-regular-svg-icons": "^5.13.1",
+    "@fortawesome/pro-solid-svg-icons": "^5.13.1",
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "dayjs": "^1.8.28",
+    "dayjs": "^1.8.29",
     "jwt-decode": "^2.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -40,7 +41,7 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^9.8.1",
+    "autoprefixer": "^9.8.4",
     "postcss-cli": "^7.1.1",
     "tailwindcss": "^1.4.6"
   },
