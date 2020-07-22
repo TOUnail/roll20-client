@@ -25,11 +25,11 @@ const Profile = () => {
           context.authenticated ? (
             <div className="w-full">
               <div className="shadow bg-white p-4 my-2 sm:rounded-lg flex flex-col justify-between leading-normal">
-                <div className="relative">
+                <div className="text-center">
                   <img
                     src={context.credentials.imageUrl}
                     alt="profile"
-                    className="rounded-full w-20 h-20 mx-auto mb-2"
+                    className="rounded-full w-20 h-20 object-cover mx-auto -m-6"
                   />
                   <input
                     type="file"
@@ -39,8 +39,7 @@ const Profile = () => {
                   />
                   <button
                     onClick={handleEditPicture}
-                    className="focus:outline-none absolute"
-                    style={{ left: "48%", bottom: "0.5rem" }}
+                    className="focus:outline-none block mx-auto"
                   >
                     <FontAwesomeIcon
                       className="text-gray-700"

@@ -21,7 +21,6 @@ const Store = ({ children }) => {
       const decodedToken = jwtDecode(token);
       if (decodedToken.exp * 1000 < Date.now()) {
         logoutUser();
-        window.location.href = "/login";
       } else {
         dispatch({ type: "SET_AUTHENTICATED" });
         new Headers().append("Authorization", token);
@@ -63,6 +62,7 @@ const Store = ({ children }) => {
     localStorage.removeItem("FBIdToken");
     new Headers().delete("Authorization");
     dispatch({ type: "SET_UNAUTHENTICATED" });
+    window.location.href = "/login";
   };
   const signupUser = async (newUserData, history) => {
     try {
