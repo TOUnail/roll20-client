@@ -39,7 +39,7 @@ const Login = (props) => {
                   Logo
                 </span>
               </div>
-              <div className="mb-4">
+              <div className="mb-2">
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="email"
@@ -49,7 +49,7 @@ const Login = (props) => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className={context.errors ? "mb-2" : "mb-8"}>
+              <div className={context.errors ? "mb-4" : "mb-8"}>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="password"
@@ -71,9 +71,9 @@ const Login = (props) => {
                     : "bg-primary-700"
                 }`}
                 type="submit"
-                disabled={email === "" || password === "" || context.loading}
+                disabled={email === "" || password === "" || context.loadingUI}
               >
-                {!context.loading ? (
+                {!context.loadingUI ? (
                   "Sign In"
                 ) : (
                   <FontAwesomeIcon icon={faDiceD20} spin />

@@ -29,7 +29,7 @@ const Profile = () => {
                   <img
                     src={context.credentials.imageUrl}
                     alt="profile"
-                    className="rounded-full w-20 h-20 object-cover mx-auto -m-6"
+                    className="rounded-full w-20 h-20 object-cover mx-auto -mb-6"
                   />
                   <input
                     type="file"

@@ -117,7 +117,23 @@ const Store = ({ children }) => {
       console.log(err);
     }
   };
-
+  const editUserDetails = async (userDetails) => {
+    try {
+      dispatch({ type: "LOADING_USER" });
+      const token = localStorage.FBIdToken;
+      await fetch("/user", {
+        credentials: "include",
+        method: "post",
+        headers: {
+          Authorization: token,
+        },
+      }).then(() => {
+        getUserData(token);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const uploadImage = async (formData) => {
     try {
       dispatch({ type: "LOADING_USER" });
@@ -156,6 +172,9 @@ const Store = ({ children }) => {
     },
     logoutUser: () => {
       logoutUser();
+    },
+    editUserDetails: (userDetails) => {
+      editUserDetails(userDetails);
     },
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;

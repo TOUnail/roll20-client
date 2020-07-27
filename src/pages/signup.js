@@ -124,10 +124,10 @@ const Signup = (props) => {
                   password === "" ||
                   confirmPassword === "" ||
                   handle === "" ||
-                  context.loading
+                  context.loadingUI
                 }
               >
-                {!context.loading ? (
+                {!context.loadingUI ? (
                   "Sign up"
                 ) : (
                   <FontAwesomeIcon icon={faDiceD20} spin />
