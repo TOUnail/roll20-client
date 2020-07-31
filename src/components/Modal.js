@@ -1,6 +1,9 @@
 import React, { Fragment } from "react";
 import { createPortal } from "react-dom";
-// https://medium.com/swlh/building-modals-in-react-64d92591f4b
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/pro-solid-svg-icons/faTimes";
+
 const Modal = ({ open, hideModal, children }) => {
   return open
     ? createPortal(
@@ -15,8 +18,14 @@ const Modal = ({ open, hideModal, children }) => {
             role="dialog"
           >
             <div className="items-center bg-white rounded flex flex-col m-6 max-w-2xl relative z-10">
-              <div className="p-6">{children}</div>
-              <button onClick={hideModal}>Close</button>
+              <button
+                className="absolute text-gray-600 hover:text-gray-700 focus:outline-none"
+                style={{ top: "1rem", right: "1rem" }}
+                onClick={hideModal}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+              {children}
             </div>
           </div>
         </Fragment>,

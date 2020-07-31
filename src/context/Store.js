@@ -125,8 +125,11 @@ const Store = ({ children }) => {
         credentials: "include",
         method: "post",
         headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
           Authorization: token,
         },
+        body: JSON.stringify(userDetails),
       }).then(() => {
         getUserData(token);
       });

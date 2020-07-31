@@ -52,6 +52,9 @@ const Profile = () => {
                     <strong>{context.credentials.handle}</strong>
                   </h2>
                 </div>
+                {context.credentials.location && (
+                  <p>{context.credentials.location}</p>
+                )}
                 {context.credentials.alignment && (
                   <p>{context.credentials.alignment}</p>
                 )}
