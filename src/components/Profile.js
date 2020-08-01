@@ -21,7 +21,7 @@ const Profile = () => {
   return (
     <Context.Consumer>
       {(context) =>
-        !context.loadingData ? (
+        !context.loadingUser ? (
           context.authenticated ? (
             <div className="w-full">
               <div className="shadow bg-white p-4 my-2 sm:rounded-lg flex flex-col justify-between leading-normal">
@@ -48,19 +48,25 @@ const Profile = () => {
                   </button>
                 </div>
                 <div className="text-center">
-                  <h2 className="text-lg">
+                  <h2 className="text-lg my-2">
                     <strong>{context.credentials.handle}</strong>
                   </h2>
+                  {context.credentials.title && (
+                    <p className="text-primary-900">
+                      {context.credentials.title}
+                    </p>
+                  )}
+                  {context.credentials.location && (
+                    <p className="text-gray-600">
+                      {context.credentials.location}
+                    </p>
+                  )}
+                  {context.credentials.alignment && (
+                    <p className="text-gray-600">
+                      {context.credentials.alignment}
+                    </p>
+                  )}
                 </div>
-                {context.credentials.location && (
-                  <p>{context.credentials.location}</p>
-                )}
-                {context.credentials.alignment && (
-                  <p>{context.credentials.alignment}</p>
-                )}
-                {context.credentials.title && (
-                  <p>{context.credentials.title}</p>
-                )}
               </div>
             </div>
           ) : (

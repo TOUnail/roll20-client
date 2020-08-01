@@ -1,4 +1,4 @@
-const UserReducer = (state, action) => {
+const GlobalReducer = (state, action) => {
   switch (action.type) {
     case "SET_AUTHENTICATED":
       return {
@@ -12,12 +12,12 @@ const UserReducer = (state, action) => {
     case "LOADING_USER":
       return {
         ...state,
-        loadingData: true,
+        loadingUser: true,
       };
     case "SET_USER":
       return {
         authenticated: true,
-        loadingData: false,
+        loadingUser: false,
         ...action.payload,
       };
     case "SET_ERRORS":
@@ -37,9 +37,46 @@ const UserReducer = (state, action) => {
         ...state,
         loadingUI: true,
       };
+    case "LOADING_DATA":
+      return {
+        ...state,
+        loadingData: true,
+      };
+    case "SET_POSTS":
+      return {
+        ...state,
+        posts: action.payload,
+        loadingData: false,
+      };
+    case "LIKE_POST":
+      let likeIndex = state.posts.findIndex(
+        (post) => post.postId === action.payload.postId
+      );
+      state.posts[likeIndex] = action.payload;
+      return {
+        likes: [
+          ...state.likes,
+          {
+            userHandle: state.credentials.handle,
+            postId: action.payload.postId,
+          },
+        ],
+        ...state,
+      };
+    case "UNLIKE_POST":
+      let unlikeIndex = state.posts.findIndex(
+        (post) => post.postId === action.payload.postId
+      );
+      state.posts[unlikeIndex] = action.payload;
+      return {
+        likes: state.likes.filter(
+          (like) => like.postId === action.payload.postId
+        ),
+        ...state,
+      };
     default:
       return state;
   }
 };
 
-export default UserReducer;
+export default GlobalReducer;

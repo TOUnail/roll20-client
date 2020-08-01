@@ -1,20 +1,23 @@
 import React, { useReducer, useEffect } from "react";
 import jwtDecode from "jwt-decode";
-import UserReducer from "../reducers/reducer";
+import GlobalReducer from "../reducers/reducer";
 import Context from "./Context";
 
 const initialState = {
   authenticated: false,
+  posts: [],
+  post: {},
   credentials: {},
   likes: [],
   notifications: [],
-  loadingData: false,
+  loadingUser: false,
   loadingUI: false,
+  loadingData: false,
   errors: {},
 };
 
 const Store = ({ children }) => {
-  const [state, dispatch] = useReducer(UserReducer, initialState);
+  const [state, dispatch] = useReducer(GlobalReducer, initialState);
   useEffect(() => {
     const token = localStorage.FBIdToken;
     if (token) {
@@ -28,6 +31,24 @@ const Store = ({ children }) => {
       }
     }
   }, []);
+  const getPosts = async () => {
+    dispatch({ type: "LOADING_DATA" });
+    const response = await fetch("/posts");
+    response
+      .json()
+      .then((res) => {
+        dispatch({
+          type: "SET_POSTS",
+          payload: res,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: "SET_POSTS",
+          payload: [],
+        });
+      });
+  };
   const setAuthorizationHeader = (token) => {
     const FBIdToken = `Bearer ${token}`;
     localStorage.setItem("FBIdToken", FBIdToken);
@@ -159,11 +180,15 @@ const Store = ({ children }) => {
   const value = {
     authenticated: state.authenticated,
     credentials: state.credentials,
+    posts: state.posts,
     likes: state.likes,
     notifications: state.notifications,
     loadingUI: state.loadingUI,
-    loadingData: state.loadingData,
+    loadingUser: state.loadingUser,
     errors: state.errors,
+    getPosts: () => {
+      getPosts();
+    },
     loginUser: (userData, props) => {
       loginUser(userData, props);
     },
