@@ -16,6 +16,7 @@ const GlobalReducer = (state, action) => {
       };
     case "SET_USER":
       return {
+        ...state,
         authenticated: true,
         loadingUser: false,
         ...action.payload,
@@ -50,29 +51,31 @@ const GlobalReducer = (state, action) => {
       };
     case "LIKE_POST":
       let likeIndex = state.posts.findIndex(
-        (post) => post.postId === action.payload.postId
+        (post) => post.postId === action.payload.postData.postId
       );
-      state.posts[likeIndex] = action.payload;
+      console.log(likeIndex);
+      state.posts[likeIndex] = action.payload.postData;
       return {
+        ...state,
         likes: [
           ...state.likes,
           {
             userHandle: state.credentials.handle,
-            postId: action.payload.postId,
+            postId: action.payload.postData.postId,
           },
         ],
-        ...state,
       };
     case "UNLIKE_POST":
       let unlikeIndex = state.posts.findIndex(
-        (post) => post.postId === action.payload.postId
+        (post) => post.postId === action.payload.postInfo.postId
       );
-      state.posts[unlikeIndex] = action.payload;
+      console.log(unlikeIndex);
+      state.posts[unlikeIndex] = action.payload.postInfo;
       return {
-        likes: state.likes.filter(
-          (like) => like.postId === action.payload.postId
-        ),
         ...state,
+        likes: state.likes.filter(
+          (like) => like.postId !== action.payload.postInfo.postId
+        ),
       };
     default:
       return state;

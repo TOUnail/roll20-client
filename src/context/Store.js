@@ -30,25 +30,34 @@ const Store = ({ children }) => {
         getUserData(token);
       }
     }
+    const getPosts = async () => {
+      try {
+        dispatch({ type: "LOADING_DATA" });
+        // console.log("try fetch");
+        // dispatch({ type: "SET_POSTS", payload: ["test"] });
+        const response = await fetch("/posts");
+        response
+          .json()
+          .then((res) => {
+            dispatch({
+              type: "SET_POSTS",
+              payload: res,
+            });
+          })
+          .catch((err) => {
+            dispatch({
+              type: "SET_POSTS",
+              payload: [],
+            });
+            console.log(err);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getPosts();
   }, []);
-  const getPosts = async () => {
-    dispatch({ type: "LOADING_DATA" });
-    const response = await fetch("/posts");
-    response
-      .json()
-      .then((res) => {
-        dispatch({
-          type: "SET_POSTS",
-          payload: res,
-        });
-      })
-      .catch((err) => {
-        dispatch({
-          type: "SET_POSTS",
-          payload: [],
-        });
-      });
-  };
+
   const setAuthorizationHeader = (token) => {
     const FBIdToken = `Bearer ${token}`;
     localStorage.setItem("FBIdToken", FBIdToken);
@@ -176,7 +185,71 @@ const Store = ({ children }) => {
       console.log(err);
     }
   };
+  const likePost = async (postId) => {
+    try {
+      const token = localStorage.FBIdToken;
 
+      const response = await fetch(`/post/${postId}/like`, {
+        credentials: "include",
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: token,
+        },
+      });
+      response.json().then((res) => {
+        dispatch({ type: "LIKE_POST", payload: res });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const unlikePost = async (postId) => {
+    try {
+      const token = localStorage.FBIdToken;
+      const response = await fetch(`/post/${postId}/unlike`, {
+        credentials: "include",
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: token,
+        },
+      });
+      response.json().then((res) => {
+        dispatch({ type: "UNLIKE_POST", payload: res });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // const getPosts = useCallback(async () => {
+  //   // try {
+  //   dispatch({ type: "LOADING_DATA" });
+  //   console.log("try fetch");
+  //   dispatch({ type: "SET_POSTS", payload: ["test"] });
+  //   // const response = await fetch("/posts");
+  //   // response
+  //   //   .json()
+  //   //   .then((res) => {
+  //   //     dispatch({
+  //   //       type: "SET_POSTS",
+  //   //       payload: res,
+  //   //     });
+  //   //   })
+  //   //   .catch((err) => {
+  //   //     dispatch({
+  //   //       type: "SET_POSTS",
+  //   //       payload: [],
+  //   //     });
+  //   //     console.log(err);
+  //   //   });
+  //   // } catch (err) {
+  //   //   console.log(err);
+  //   // }
+  // }, []);
   const value = {
     authenticated: state.authenticated,
     credentials: state.credentials,
@@ -185,9 +258,16 @@ const Store = ({ children }) => {
     notifications: state.notifications,
     loadingUI: state.loadingUI,
     loadingUser: state.loadingUser,
+    loadingData: state.loadingData,
     errors: state.errors,
-    getPosts: () => {
-      getPosts();
+    // getPosts: () => {
+    //   getPosts();
+    // },
+    likePost: (postId) => {
+      likePost(postId);
+    },
+    unlikePost: (postId) => {
+      unlikePost(postId);
     },
     loginUser: (userData, props) => {
       loginUser(userData, props);
