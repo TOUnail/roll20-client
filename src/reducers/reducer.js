@@ -77,6 +77,14 @@ const GlobalReducer = (state, action) => {
           (like) => like.postId !== action.payload.postInfo.postId
         ),
       };
+    case "DELETE_POST":
+      let deleteIndex = state.posts.findIndex(
+        (post) => post.postId === action.payload
+      );
+      state.posts.splice(deleteIndex, 1);
+      return {
+        ...state,
+      };
     default:
       return state;
   }

@@ -224,7 +224,25 @@ const Store = ({ children }) => {
       console.log(err);
     }
   };
-
+  const deletePost = async (postId) => {
+    try {
+      const token = localStorage.FBIdToken;
+      const response = await fetch(`/post/${postId}`, {
+        credentials: "include",
+        method: "delete",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: token,
+        },
+      });
+      response.json().then((res) => {
+        dispatch({ type: "DELETE_POST", payload: postId });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // const getPosts = useCallback(async () => {
   //   // try {
   //   dispatch({ type: "LOADING_DATA" });
@@ -268,6 +286,9 @@ const Store = ({ children }) => {
     },
     unlikePost: (postId) => {
       unlikePost(postId);
+    },
+    deletePost: (postId) => {
+      deletePost(postId);
     },
     loginUser: (userData, props) => {
       loginUser(userData, props);

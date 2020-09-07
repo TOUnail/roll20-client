@@ -11,12 +11,12 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "dayjs": "^1.8.31",
+    "dayjs": "^1.8.35",
     "jwt-decode": "^2.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "^3.4.3"
   },
   "scripts": {
     "start": "npm run watch:css && react-scripts start",
@@ -42,9 +42,9 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^9.8.5",
-    "postcss-cli": "^7.1.1",
-    "tailwindcss": "^1.6.0"
+    "autoprefixer": "^9.8.6",
+    "postcss-cli": "^7.1.2",
+    "tailwindcss": "^1.8.3"
   },
   "proxy": "https://us-central1-roll20-a9af4.cloudfunctions.net/api"
 }
