@@ -147,6 +147,37 @@ const Store = ({ children }) => {
       console.log(err);
     }
   };
+  const addPost = async (newPost) => {
+    try {
+      dispatch({ type: "LOADING_UI" });
+      const token = localStorage.FBIdToken;
+      const response = await fetch("/post", {
+        credentials: "include",
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: token,
+        },
+        body: JSON.stringify(newPost),
+      });
+      response.json().then((res) => {
+        console.log({ res });
+        dispatch({
+          type: "ADD_POST",
+          payload: res,
+        });
+        dispatch({
+          type: "CLEAR_ERRORS",
+        });
+      });
+    } catch (err) {
+      dispatch({
+        type: "SET_ERRORS",
+        payload: err.response,
+      });
+    }
+  };
   const editUserDetails = async (userDetails) => {
     try {
       dispatch({ type: "LOADING_USER" });
@@ -281,6 +312,9 @@ const Store = ({ children }) => {
     // getPosts: () => {
     //   getPosts();
     // },
+    addPost: (newPost) => {
+      addPost(newPost);
+    },
     likePost: (postId) => {
       likePost(postId);
     },

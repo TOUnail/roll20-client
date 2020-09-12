@@ -73,15 +73,17 @@ const Post = (props) => {
           />
           <div className="text-sm w-full">
             <div className="flex items-center justify-between">
-              <p className="text-gray-900 leading-none">
+              <p className="text-gray-900 font-bold leading-none">
                 <Link to={`/users/${userHandle}`}>{userHandle}</Link> rolled a{" "}
                 {roll}
               </p>
               {deleteButton}
             </div>
-            <p className="text-gray-600">{dayjs(createdAt).fromNow()}</p>
+            <p className="text-gray-600 text-xs">
+              {dayjs(createdAt).fromNow()}
+            </p>
             <p className={likeCount < 1 || commentCount < 1 ? "mb-3" : ""}>
-              {body}
+              <Fragment>{body}</Fragment>
             </p>
             <div className="flex flex-row justify-end">
               {likeCount > 0 && (

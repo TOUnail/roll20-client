@@ -44,7 +44,7 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   });
   return (
-    <div className="bg-gray-900 p-2 border-gray-200 border-b sticky top-0">
+    <div className="bg-gray-900 p-2 border-gray-200 border-b sticky top-0 z-40">
       <div className="container">
         <nav className="flex items-center justify-between flex-wrap ">
           <Link to={"/"} className="flex items-center flex-shrink-0">
@@ -103,7 +103,14 @@ const Navbar = () => {
                         </div>
                       )}
                     </div>
-                    <Modal open={open} hideModal={toggleModal}>
+                    <Modal
+                      outerClass="flex justify-center inset-x-0 outline-none overflow-x-hidden overflow-y-auto fixed w-100 z-50"
+                      innerClass="items-center bg-white rounded flex flex-col m-6 max-w-2xl relative z-10"
+                      top="25%"
+                      open={open}
+                      hideModal={toggleModal}
+                      portalEl={document.body}
+                    >
                       <EditProfile hideModal={toggleModal} />
                     </Modal>
                   </Fragment>

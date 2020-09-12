@@ -65,6 +65,12 @@ const GlobalReducer = (state, action) => {
           },
         ],
       };
+    case "ADD_POST":
+      console.log(action.payload);
+      return {
+        ...state,
+        posts: [action.payload, ...state.posts],
+      };
     case "UNLIKE_POST":
       let unlikeIndex = state.posts.findIndex(
         (post) => post.postId === action.payload.postInfo.postId

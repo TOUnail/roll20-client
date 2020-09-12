@@ -44,7 +44,7 @@
   "devDependencies": {
     "autoprefixer": "^9.8.6",
     "postcss-cli": "^7.1.2",
-    "tailwindcss": "^1.8.3"
+    "tailwindcss": "^1.8.7"
   },
   "proxy": "https://us-central1-roll20-a9af4.cloudfunctions.net/api"
 }

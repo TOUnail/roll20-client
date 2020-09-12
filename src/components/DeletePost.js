@@ -25,7 +25,14 @@ const DeletePost = (props) => {
         <FontAwesomeIcon icon={faTrashAlt} />
       </button>
 
-      <Modal open={open} hideModal={toggleModal}>
+      <Modal
+        outerClass="flex justify-center inset-x-0 outline-none overflow-x-hidden overflow-y-auto fixed w-100 z-40"
+        innerClass="items-center bg-white rounded flex flex-col m-6 max-w-2xl relative z-10"
+        top="25%"
+        open={open}
+        hideModal={toggleModal}
+        portalEl={document.body}
+      >
         <div className="pt-12 px-6 pb-6">
           <h5 className="font-bold">
             Are you sure you want to delete this post?
