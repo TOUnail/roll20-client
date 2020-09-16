@@ -29,7 +29,7 @@ const AddPost = () => {
     <Context.Consumer>
       {(context) => (
         <Fragment>
-          <div className="w-full" onClick={() => clickedAddPost()}>
+          <div onClick={() => clickedAddPost()}>
             <div className="shadow bg-white px-4 pb-4 my-2 sm:rounded-lg flex flex-col justify-between leading-normal">
               <p className="text-sm font-bold my-2 cursor-pointer">
                 Create a post
@@ -48,14 +48,14 @@ const AddPost = () => {
           </div>
           <div className="container absolute top-0">
             <div className="grid grid-cols-1 gap-4">
-              <div className="col-span-1 asdf">
+              <div className="col-span-1 modal-anchor">
                 <Modal
                   outerClass="z-50 absolute w-full focus:outline-none"
                   innerClass="bg-white sm:rounded-lg relative z-10"
                   open={open}
                   top="0.5rem"
                   hideModal={toggleModal}
-                  portalEl={document.querySelector(".asdf")}
+                  portalEl={document.querySelector(".modal-anchor")}
                 >
                   <form onSubmit={handleSubmit}>
                     <div className="px-4 pb-4 flex flex-col justify-between leading-normal">
@@ -69,7 +69,7 @@ const AddPost = () => {
                         <textarea
                           autoFocus
                           placeholder="What's your action?"
-                          className="py-2 px-3 resize-none text-gray-700 focus:outline-none"
+                          className="flex-1 py-2 px-3 resize-none text-gray-700 focus:outline-none"
                           rows="1"
                           onChange={handleChange}
                         ></textarea>

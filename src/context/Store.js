@@ -33,8 +33,6 @@ const Store = ({ children }) => {
     const getPosts = async () => {
       try {
         dispatch({ type: "LOADING_DATA" });
-        // console.log("try fetch");
-        // dispatch({ type: "SET_POSTS", payload: ["test"] });
         const response = await fetch("/posts");
         response
           .json()
@@ -119,6 +117,24 @@ const Store = ({ children }) => {
       console.log(err);
     }
   };
+  const getPost = async (postId) => {
+    console.log("triggered");
+    try {
+      dispatch({ type: "LOADING_UI" });
+      const response = await fetch(`/post/${postId}`);
+      response.json().then((res) => {
+        dispatch({
+          type: "SET_POST",
+          payload: res,
+        });
+        dispatch({
+          type: "END_LOADING_UI",
+        });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const getUserData = async (token) => {
     try {
       dispatch({ type: "LOADING_USER" });
@@ -162,7 +178,6 @@ const Store = ({ children }) => {
         body: JSON.stringify(newPost),
       });
       response.json().then((res) => {
-        console.log({ res });
         dispatch({
           type: "ADD_POST",
           payload: res,
@@ -303,6 +318,7 @@ const Store = ({ children }) => {
     authenticated: state.authenticated,
     credentials: state.credentials,
     posts: state.posts,
+    post: state.post,
     likes: state.likes,
     notifications: state.notifications,
     loadingUI: state.loadingUI,
@@ -326,6 +342,9 @@ const Store = ({ children }) => {
     },
     loginUser: (userData, props) => {
       loginUser(userData, props);
+    },
+    getPost: (postId) => {
+      getPost(postId);
     },
     signupUser: (newUserData, props) => {
       signupUser(newUserData, props);

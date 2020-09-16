@@ -1,12 +1,14 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Store from "./context/Store";
 //import jwtDecode from "jwt-decode";
 // Components
 import Navbar from "./components/Navbar";
+import Profile from "./components/Profile";
 import AuthRoute from "./util/AuthRoute";
 // Pages
 import Home from "./pages/home";
+import Post from "./pages/post";
 import login from "./pages/login";
 import signup from "./pages/signup";
 
@@ -32,12 +34,28 @@ function App() {
     <Store>
       <Router>
         <Switch>
-          <Route exact path="/">
-            <Navbar />
-            <Home />
-          </Route>
           <AuthRoute exact path="/login" component={login} />
           <AuthRoute exact path="/signup" component={signup} />
+          <Fragment>
+            <Navbar />
+
+            <div className="container">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="col-span-1 md:col-span-2 post-lists relative">
+                  <Route exact path="/">
+                    <Home />
+                  </Route>
+                  <Route
+                    path="/post/:postId"
+                    render={(props) => <Post {...props} />}
+                  />
+                </div>
+                <div className="col-span-1">
+                  <Profile />
+                </div>
+              </div>
+            </div>
+          </Fragment>
         </Switch>
       </Router>
     </Store>

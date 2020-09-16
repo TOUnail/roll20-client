@@ -31,7 +31,6 @@ const Navbar = () => {
     toggleIsMenuOpen(!isMenuOpen);
   };
   const editProfile = () => {
-    console.log("clicked");
     toggleModal();
     toggleIsMenuOpen(false);
   };

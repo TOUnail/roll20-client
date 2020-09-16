@@ -1,7 +1,10 @@
 import React, { Fragment, useContext } from "react";
+// import PostDialog from "./PostDialog";
 import DeletePost from "./DeletePost";
+// import Modal from "./Modal";
+// import useModal from "../util/useModal";
 import Context from "../context/Context";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -13,6 +16,7 @@ import { faCommentAlt } from "@fortawesome/pro-regular-svg-icons/faCommentAlt";
 const Post = (props) => {
   dayjs.extend(relativeTime);
   const postContext = useContext(Context);
+  let history = useHistory();
   const {
     post: {
       body,
@@ -25,6 +29,12 @@ const Post = (props) => {
       roll,
     },
   } = props;
+  // const { open, toggleModal } = useModal();
+  const handleOpen = (postId) => {
+    // toggleModal();
+    // postContext.getPost(postId);
+    history.push(`/post/${postId}`);
+  };
   const likedPost = () => {
     if (
       postContext.likes &&
@@ -37,22 +47,31 @@ const Post = (props) => {
     <Fragment>
       <Link
         to={"/login"}
-        className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        className="bg-transparent text-center w-full hover:bg-red-100 text-gray-800 font-semibold py-1"
       >
         <FontAwesomeIcon icon={faHeart} /> Like
       </Link>
     </Fragment>
   ) : likedPost() ? (
     <button
-      onClick={() => postContext.unlikePost(postId)}
-      className="bg-white hover:bg-gray-100 focus:outline-none text-gray-800 font-semibold py-1 px-2"
+      onClick={(e) => {
+        e.stopPropagation();
+        postContext.unlikePost(postId);
+      }}
+      className="bg-transparent w-full hover:bg-red-100 focus:outline-none text-gray-800 font-semibold py-1"
     >
       <FontAwesomeIcon icon={faFilledHeart} /> Unlike
     </button>
   ) : (
     <button
-      onClick={() => postContext.likePost(postId)}
-      className="bg-white hover:bg-gray-100 focus:outline-none text-gray-800 font-semibold py-1 px-2"
+      onClick={(e) => {
+        e.stopPropagation();
+        postContext.likePost(postId);
+      }}
+      className="bg-transparent w-full hover:bg-red-100 focus:outline-none text-gray-800 font-semibold py-1"
     >
       <FontAwesomeIcon icon={faHeart} /> Like
     </button>
@@ -63,19 +82,36 @@ const Post = (props) => {
       <DeletePost postId={postId} />
     ) : null;
   return (
-    <div className="w-full">
-      <div className="shadow bg-white px-4 pt-4 my-2 sm:rounded-lg flex flex-col justify-between leading-normal">
+    <Fragment>
+      <div
+        className="shadow cursor-pointer bg-white hover:bg-gray-100 px-4 pt-4 my-2 sm:rounded-lg flex flex-col justify-between leading-normal"
+        onClick={() => {
+          handleOpen(postId);
+        }}
+      >
         <div className="flex">
-          <img
-            className="w-10 h-10 rounded-full object-cover mr-4"
-            src={userImage}
-            alt="user"
-          />
-          <div className="text-sm w-full">
+          <Link
+            onClick={(e) => e.stopPropagation()}
+            to={`/users/${userHandle}`}
+            className="h-10 mr-4"
+          >
+            <img
+              className="w-10 h-10 rounded-full object-cover"
+              src={userImage}
+              alt="user"
+            />
+          </Link>
+          <div className="text-sm flex-1">
             <div className="flex items-center justify-between">
               <p className="text-gray-900 font-bold leading-none">
-                <Link to={`/users/${userHandle}`}>{userHandle}</Link> rolled a{" "}
-                {roll}
+                <Link
+                  onClick={(e) => e.stopPropagation()}
+                  className="hover:underline"
+                  to={`/users/${userHandle}`}
+                >
+                  {userHandle}
+                </Link>{" "}
+                rolled a {roll}
               </p>
               {deleteButton}
             </div>
@@ -104,14 +140,27 @@ const Post = (props) => {
             <hr />
             <div className="flex justify-around">
               {likeButton}
-              <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2">
+              <button
+                onClick={(e) => e.stopPropagation()}
+                className="bg-transparent w-full hover:bg-blue-100 focus:outline-none text-gray-800 font-semibold py-1"
+              >
                 <FontAwesomeIcon icon={faCommentAlt} /> Comment
               </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      {/* <Modal
+        outerClass="container mx-auto inset-x-0 outline-none overflow-x-hidden fixed w-100 z-50"
+        innerClass=" bg-white rounded m-6 relative z-10"
+        top="0"
+        open={open}
+        hideModal={toggleModal}
+        portalEl={document.body}
+      >
+        <PostDialog postId={postId} userHandle={userHandle} />
+      </Modal> */}
+    </Fragment>
   );
 };
 

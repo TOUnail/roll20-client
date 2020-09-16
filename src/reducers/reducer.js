@@ -38,6 +38,11 @@ const GlobalReducer = (state, action) => {
         ...state,
         loadingUI: true,
       };
+    case "END_LOADING_UI":
+      return {
+        ...state,
+        loadingUI: false,
+      };
     case "LOADING_DATA":
       return {
         ...state,
@@ -49,11 +54,15 @@ const GlobalReducer = (state, action) => {
         posts: action.payload,
         loadingData: false,
       };
+    case "SET_POST":
+      return {
+        ...state,
+        post: action.payload,
+      };
     case "LIKE_POST":
       let likeIndex = state.posts.findIndex(
         (post) => post.postId === action.payload.postData.postId
       );
-      console.log(likeIndex);
       state.posts[likeIndex] = action.payload.postData;
       return {
         ...state,
@@ -66,7 +75,6 @@ const GlobalReducer = (state, action) => {
         ],
       };
     case "ADD_POST":
-      console.log(action.payload);
       return {
         ...state,
         posts: [action.payload, ...state.posts],
@@ -75,7 +83,6 @@ const GlobalReducer = (state, action) => {
       let unlikeIndex = state.posts.findIndex(
         (post) => post.postId === action.payload.postInfo.postId
       );
-      console.log(unlikeIndex);
       state.posts[unlikeIndex] = action.payload.postInfo;
       return {
         ...state,
