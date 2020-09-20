@@ -3,7 +3,7 @@ import Context from "../context/Context";
 
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDiceD20 } from "@fortawesome/pro-regular-svg-icons/faDiceD20";
+import { faDiceD20 } from "pro-regular-svg-icons/faDiceD20";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");

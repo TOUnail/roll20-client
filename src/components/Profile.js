@@ -3,8 +3,8 @@ import Context from "../context/Context";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/pro-regular-svg-icons/faSpinner";
-import { faCameraAlt } from "@fortawesome/pro-solid-svg-icons/faCameraAlt";
+import { faSpinner } from "pro-regular-svg-icons/faSpinner";
+import { faCameraAlt } from "pro-solid-svg-icons/faCameraAlt";
 
 const Profile = () => {
   const profile = useContext(Context);

@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { createPortal } from "react-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/pro-solid-svg-icons/faTimes";
+import { faTimes } from "pro-solid-svg-icons/faTimes";
 
 const Modal = ({
   open,

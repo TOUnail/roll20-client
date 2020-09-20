@@ -13,9 +13,9 @@ import Context from "../context/Context";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDiceD20 } from "@fortawesome/pro-duotone-svg-icons/faDiceD20";
-import { faBell } from "@fortawesome/pro-solid-svg-icons/faBell";
-import { faCaretDown } from "@fortawesome/pro-solid-svg-icons/faCaretDown";
+import { faDiceD20 } from "pro-duotone-svg-icons/faDiceD20";
+import { faBell } from "pro-solid-svg-icons/faBell";
+import { faCaretDown } from "pro-solid-svg-icons/faCaretDown";
 
 const Navbar = () => {
   const [isMenuOpen, toggleIsMenuOpen] = useState(false);

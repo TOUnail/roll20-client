@@ -4,7 +4,7 @@ import Modal from "./Modal";
 import useModal from "../util/useModal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/pro-regular-svg-icons/faTrashAlt";
+import { faTrashAlt } from "pro-regular-svg-icons/faTrashAlt";
 
 const DeletePost = (props) => {
   const { open, toggleModal } = useModal();

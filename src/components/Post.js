@@ -9,9 +9,9 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/pro-regular-svg-icons/faHeart";
-import { faHeart as faFilledHeart } from "@fortawesome/pro-solid-svg-icons/faHeart";
-import { faCommentAlt } from "@fortawesome/pro-regular-svg-icons/faCommentAlt";
+import { faHeart } from "pro-regular-svg-icons/faHeart";
+import { faHeart as faFilledHeart } from "pro-solid-svg-icons/faHeart";
+import { faCommentAlt } from "pro-regular-svg-icons/faCommentAlt";
 
 const Post = (props) => {
   dayjs.extend(relativeTime);
@@ -92,7 +92,7 @@ const Post = (props) => {
         <div className="flex">
           <Link
             onClick={(e) => e.stopPropagation()}
-            to={`/users/${userHandle}`}
+            to={`/user/${userHandle}`}
             className="h-10 mr-4"
           >
             <img
@@ -116,7 +116,9 @@ const Post = (props) => {
               {deleteButton}
             </div>
             <p className="text-gray-600 text-xs">
-              {dayjs(createdAt).fromNow()}
+              {dayjs(createdAt).isBefore(dayjs().subtract(1, "year"))
+                ? dayjs(createdAt).format("MMM D, YYYY")
+                : dayjs(createdAt).fromNow()}
             </p>
             <p className={likeCount < 1 || commentCount < 1 ? "mb-3" : ""}>
               <Fragment>{body}</Fragment>
