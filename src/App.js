@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Store from "./context/Store";
 //import jwtDecode from "jwt-decode";
 // Components
-import Navbar from "./components/Navbar";
-import Profile from "./components/Profile";
+import Navbar from "./components/layout/Navbar";
+import Profile from "./components/profile/Profile";
 import AuthRoute from "./util/AuthRoute";
 // Pages
 import Home from "./pages/home";

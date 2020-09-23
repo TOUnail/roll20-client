@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import Context from "../context/Context";
-import AddPost from "../components/AddPost";
-import Post from "../components/Post";
+import AddPost from "../components/post/AddPost";
+import Post from "../components/post/Post";
 
 const Home = () => {
   return (

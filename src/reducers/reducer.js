@@ -66,6 +66,10 @@ const GlobalReducer = (state, action) => {
       state.posts[likeIndex] = action.payload.postData;
       return {
         ...state,
+        post: {
+          ...state.post,
+          likeCount: action.payload.postData.likeCount,
+        },
         likes: [
           ...state.likes,
           {
@@ -86,6 +90,10 @@ const GlobalReducer = (state, action) => {
       state.posts[unlikeIndex] = action.payload.postInfo;
       return {
         ...state,
+        post: {
+          ...state.post,
+          likeCount: action.payload.postInfo.likeCount,
+        },
         likes: state.likes.filter(
           (like) => like.postId !== action.payload.postInfo.postId
         ),

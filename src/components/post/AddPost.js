@@ -1,8 +1,8 @@
 import React, { Fragment, useContext, useState } from "react";
-import Context from "../context/Context";
+import Context from "../../context/Context";
 
-import Modal from "./Modal";
-import useModal from "../util/useModal";
+import Modal from "../Modal";
+import useModal from "../../util/useModal";
 
 const AddPost = () => {
   const addPost = useContext(Context);

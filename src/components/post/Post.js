@@ -1,16 +1,13 @@
 import React, { Fragment, useContext } from "react";
 // import PostDialog from "./PostDialog";
 import DeletePost from "./DeletePost";
-// import Modal from "./Modal";
-// import useModal from "../util/useModal";
-import Context from "../context/Context";
+import LikeButton from "./LikeButton";
+import Context from "../../context/Context";
 import { Link, useHistory } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "pro-regular-svg-icons/faHeart";
-import { faHeart as faFilledHeart } from "pro-solid-svg-icons/faHeart";
 import { faCommentAlt } from "pro-regular-svg-icons/faCommentAlt";
 
 const Post = (props) => {
@@ -35,47 +32,7 @@ const Post = (props) => {
     // postContext.getPost(postId);
     history.push(`/post/${postId}`);
   };
-  const likedPost = () => {
-    if (
-      postContext.likes &&
-      postContext.likes.find((like) => like.postId === postId)
-    )
-      return true;
-    else return false;
-  };
-  const likeButton = !postContext.authenticated ? (
-    <Fragment>
-      <Link
-        to={"/login"}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className="bg-transparent text-center w-full hover:bg-red-100 text-gray-800 font-semibold py-1"
-      >
-        <FontAwesomeIcon icon={faHeart} /> Like
-      </Link>
-    </Fragment>
-  ) : likedPost() ? (
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        postContext.unlikePost(postId);
-      }}
-      className="bg-transparent w-full hover:bg-red-100 focus:outline-none text-gray-800 font-semibold py-1"
-    >
-      <FontAwesomeIcon icon={faFilledHeart} /> Unlike
-    </button>
-  ) : (
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        postContext.likePost(postId);
-      }}
-      className="bg-transparent w-full hover:bg-red-100 focus:outline-none text-gray-800 font-semibold py-1"
-    >
-      <FontAwesomeIcon icon={faHeart} /> Like
-    </button>
-  );
+
   const deleteButton =
     postContext.authenticated &&
     postContext.credentials.handle === props.post.userHandle ? (
@@ -141,7 +98,7 @@ const Post = (props) => {
             </div>
             <hr />
             <div className="flex justify-around">
-              {likeButton}
+              <LikeButton postId={postId} />
               <button
                 onClick={(e) => e.stopPropagation()}
                 className="bg-transparent w-full hover:bg-blue-100 focus:outline-none text-gray-800 font-semibold py-1"
@@ -152,16 +109,6 @@ const Post = (props) => {
           </div>
         </div>
       </div>
-      {/* <Modal
-        outerClass="container mx-auto inset-x-0 outline-none overflow-x-hidden fixed w-100 z-50"
-        innerClass=" bg-white rounded m-6 relative z-10"
-        top="0"
-        open={open}
-        hideModal={toggleModal}
-        portalEl={document.body}
-      >
-        <PostDialog postId={postId} userHandle={userHandle} />
-      </Modal> */}
     </Fragment>
   );
 };

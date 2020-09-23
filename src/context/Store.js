@@ -118,7 +118,6 @@ const Store = ({ children }) => {
     }
   };
   const getPost = async (postId) => {
-    console.log("triggered");
     try {
       dispatch({ type: "LOADING_UI" });
       const response = await fetch(`/post/${postId}`);

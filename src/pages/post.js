@@ -5,6 +5,8 @@ import React, {
   useCallback,
   useState,
 } from "react";
+import LikeButton from "../components/post/LikeButton";
+import Comments from "../components/post/Comments";
 import { Link } from "react-router-dom";
 import Context from "../context/Context";
 import dayjs from "dayjs";
@@ -12,8 +14,10 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "pro-regular-svg-icons/faArrowLeft";
+import { faCommentAlt } from "pro-regular-svg-icons/faCommentAlt";
 
 const Post = (props) => {
+  console.log("post render");
   const [mount, setMount] = useState(false);
   dayjs.extend(relativeTime);
   const singlePost = useContext(Context);
@@ -36,7 +40,7 @@ const Post = (props) => {
         <Fragment>
           {!context.loadingUI ? (
             <Fragment>
-              <div className="shadow bg-white px-4 py-2 my-2 sm:rounded-lg leading-normal">
+              <div className="shadow bg-white px-4 pt-2 my-2 sm:rounded-lg leading-normal z-20">
                 <button
                   className="rounded-full mb-2 p-2 flex items-center justify-center text-primary-600 hover:bg-gray-300 focus:outline-none"
                   onClick={props.history.goBack}
@@ -60,7 +64,7 @@ const Post = (props) => {
                   </div>
                 </div>
                 <p className="text-2xl mb-2">{context.post.body}</p>
-                <div className="flex flex-row justify-between">
+                <div className="flex flex-row justify-between items-baseline">
                   <div>
                     <p className="text-gray-600 text-sm">
                       {dayjs(context.post.createdAt).isBefore(
@@ -90,7 +94,14 @@ const Post = (props) => {
                   </div>
                 </div>
                 <hr />
+                <div className="flex justify-around">
+                  <LikeButton postId={postId} />
+                  <button className="bg-transparent w-full hover:bg-blue-100 focus:outline-none text-gray-800 font-semibold py-1">
+                    <FontAwesomeIcon icon={faCommentAlt} /> Comment
+                  </button>
+                </div>
               </div>
+              <Comments comments={context.post.comments} />
             </Fragment>
           ) : (
             <p>loading</p>

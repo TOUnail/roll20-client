@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useContext } from "react";
-import Context from "../context/Context";
+import Context from "../../context/Context";
 
 const EditProfile = (props) => {
   let [location, setLocation] = useState("");

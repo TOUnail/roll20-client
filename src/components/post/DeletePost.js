@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from "react";
-import Context from "../context/Context";
-import Modal from "./Modal";
-import useModal from "../util/useModal";
+import Context from "../../context/Context";
+import Modal from "../Modal";
+import useModal from "../../util/useModal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "pro-regular-svg-icons/faTrashAlt";

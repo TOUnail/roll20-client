@@ -6,10 +6,10 @@ import React, {
   useContext,
 } from "react";
 
-import EditProfile from "./EditProfile";
-import Modal from "./Modal";
-import useModal from "../util/useModal";
-import Context from "../context/Context";
+import EditProfile from "../profile/EditProfile";
+import Modal from "../Modal";
+import useModal from "../../util/useModal";
+import Context from "../../context/Context";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
