@@ -24,6 +24,7 @@ const DeletePost = (props) => {
         onClick={(e) => clickedDeleteButton(e)}
       >
         <FontAwesomeIcon icon={faTrashAlt} />
+        <span className="sr-only">Delete Post</span>
       </button>
 
       <Modal

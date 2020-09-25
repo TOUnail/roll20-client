@@ -6,12 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "pro-regular-svg-icons/faHeart";
 import { faHeart as faFilledHeart } from "pro-solid-svg-icons/faHeart";
 
-const LikeButton = (props) => {
+const LikeComment = (props) => {
   const likeContent = useContext(Context);
-  const likedPost = () => {
+  const likedComment = () => {
     if (
       likeContent.likes &&
-      likeContent.likes.find((like) => like.postId === props.postId)
+      likeContent.likes.find((like) => like.commentId === props.commentId)
     )
       return true;
     else return false;
@@ -23,33 +23,33 @@ const LikeButton = (props) => {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="bg-transparent text-center w-full hover:bg-red-100 text-gray-800 font-semibold py-1"
+        className="bg-transparent text-center w-full hover:bg-red-100 text-gray-800 font-semibold h-10 w-10 rounded-full"
       >
-        <FontAwesomeIcon icon={faHeart} /> Like
+        <FontAwesomeIcon icon={faHeart} />
       </Link>
     </Fragment>
-  ) : likedPost() ? (
+  ) : likedComment() ? (
     <button
       onClick={(e) => {
         e.stopPropagation();
-        likeContent.unlikePost(props.postId);
+        likeContent.unlikeComment(props.commentId);
       }}
-      className="bg-transparent w-full hover:bg-red-100 focus:outline-none text-gray-800 font-semibold py-1"
+      className="bg-transparent hover:bg-red-100 focus:outline-none text-gray-800 font-semibold h-10 w-10 rounded-full"
     >
-      <FontAwesomeIcon icon={faFilledHeart} /> Unlike
+      <FontAwesomeIcon icon={faFilledHeart} />
     </button>
   ) : (
     <button
       onClick={(e) => {
         e.stopPropagation();
-        likeContent.likePost(props.postId);
+        likeContent.likeComment(props.commentId);
       }}
-      className="bg-transparent w-full hover:bg-red-100 focus:outline-none text-gray-800 font-semibold py-1"
+      className="bg-transparent hover:bg-red-100 focus:outline-none text-gray-800 font-semibold h-10 w-10 rounded-full"
     >
-      <FontAwesomeIcon icon={faHeart} /> Like
+      <FontAwesomeIcon icon={faHeart} />
     </button>
   );
   return likeButton;
 };
 
-export default LikeButton;
+export default LikeComment;

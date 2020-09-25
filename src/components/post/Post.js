@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from "react";
 // import PostDialog from "./PostDialog";
 import DeletePost from "./DeletePost";
-import LikeButton from "./LikeButton";
+import LikePost from "./LikePost";
 import Context from "../../context/Context";
 import { Link, useHistory } from "react-router-dom";
 import dayjs from "dayjs";
@@ -98,7 +98,7 @@ const Post = (props) => {
             </div>
             <hr />
             <div className="flex justify-around">
-              <LikeButton postId={postId} />
+              <LikePost postId={postId} />
               <button
                 onClick={(e) => e.stopPropagation()}
                 className="bg-transparent w-full hover:bg-blue-100 focus:outline-none text-gray-800 font-semibold py-1"

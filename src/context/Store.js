@@ -269,6 +269,46 @@ const Store = ({ children }) => {
       console.log(err);
     }
   };
+
+  const likeComment = async (commentId) => {
+    try {
+      const token = localStorage.FBIdToken;
+
+      const response = await fetch(`/comment/${commentId}/like`, {
+        credentials: "include",
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: token,
+        },
+      });
+      response.json().then((res) => {
+        dispatch({ type: "LIKE_COMMENT", payload: res });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const unlikeComment = async (commentId) => {
+    try {
+      const token = localStorage.FBIdToken;
+      const response = await fetch(`/comment/${commentId}/unlike`, {
+        credentials: "include",
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: token,
+        },
+      });
+      response.json().then((res) => {
+        dispatch({ type: "UNLIKE_COMMENT", payload: res });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const deletePost = async (postId) => {
     try {
       const token = localStorage.FBIdToken;
@@ -335,6 +375,12 @@ const Store = ({ children }) => {
     },
     unlikePost: (postId) => {
       unlikePost(postId);
+    },
+    likeComment: (commentId) => {
+      likeComment(commentId);
+    },
+    unlikeComment: (commentId) => {
+      unlikeComment(commentId);
     },
     deletePost: (postId) => {
       deletePost(postId);

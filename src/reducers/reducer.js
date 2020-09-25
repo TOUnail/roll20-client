@@ -59,6 +59,11 @@ const GlobalReducer = (state, action) => {
         ...state,
         post: action.payload,
       };
+    case "ADD_POST":
+      return {
+        ...state,
+        posts: [action.payload, ...state.posts],
+      };
     case "LIKE_POST":
       let likeIndex = state.posts.findIndex(
         (post) => post.postId === action.payload.postData.postId
@@ -78,11 +83,6 @@ const GlobalReducer = (state, action) => {
           },
         ],
       };
-    case "ADD_POST":
-      return {
-        ...state,
-        posts: [action.payload, ...state.posts],
-      };
     case "UNLIKE_POST":
       let unlikeIndex = state.posts.findIndex(
         (post) => post.postId === action.payload.postInfo.postId
@@ -96,6 +96,40 @@ const GlobalReducer = (state, action) => {
         },
         likes: state.likes.filter(
           (like) => like.postId !== action.payload.postInfo.postId
+        ),
+      };
+    case "LIKE_COMMENT":
+      let likeCommentIndex = state.post.comments.findIndex(
+        (comment) => comment.commentId === action.payload.commentData.commentId
+      );
+      state.post.comments[likeCommentIndex] = action.payload.commentData;
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: [...state.post.comments],
+        },
+        likes: [
+          ...state.likes,
+          {
+            userHandle: state.credentials.handle,
+            commentId: action.payload.commentData.commentId,
+          },
+        ],
+      };
+    case "UNLIKE_COMMENT":
+      let unlikeCommentIndex = state.post.comments.findIndex(
+        (comment) => comment.commentId === action.payload.commentInfo.commentId
+      );
+      state.post.comments[unlikeCommentIndex] = action.payload.commentInfo;
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: [...state.post.comments],
+        },
+        likes: state.likes.filter(
+          (like) => like.commentId !== action.payload.commentInfo.commentId
         ),
       };
     case "DELETE_POST":
