@@ -1,15 +1,21 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import LikeComment from "./LikeComment";
+import DeleteComment from "./DeleteComment";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
-// import Context from "../../context/Context";
+import Context from "../../context/Context";
 
 const Comments = (props) => {
   dayjs.extend(relativeTime);
   const { comments } = props;
-  // const commentContext = useContext(Context);
+  const commentContext = useContext(Context);
+  // const deleteButton =
+  //   commentContext.authenticated &&
+  //   commentContext.credentials.handle === comments.userHandle ? (
+  //     <DeleteComment commentId={comments.commentId} />
+  //   ) : null;
   return (
     <Fragment>
       {comments && comments.length > 0 && (
@@ -45,6 +51,10 @@ const Comments = (props) => {
                         </strong>{" "}
                         {body}
                       </p>
+                      {commentContext.authenticated &&
+                      commentContext.credentials.handle === userHandle ? (
+                        <DeleteComment commentId={commentId} />
+                      ) : null}
                       {/* <button className="focus:outline-none hover:text-red-800 focus:text-red-800">
                         d
                       </button> */}

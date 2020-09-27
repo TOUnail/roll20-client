@@ -328,6 +328,25 @@ const Store = ({ children }) => {
       console.log(err);
     }
   };
+  const deleteComment = async (commentId) => {
+    try {
+      const token = localStorage.FBIdToken;
+      const response = await fetch(`/comment/${commentId}`, {
+        credentials: "include",
+        method: "delete",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: token,
+        },
+      });
+      response.json().then((res) => {
+        dispatch({ type: "DELETE_COMMENT", payload: res });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // const getPosts = useCallback(async () => {
   //   // try {
   //   dispatch({ type: "LOADING_DATA" });
@@ -384,6 +403,9 @@ const Store = ({ children }) => {
     },
     deletePost: (postId) => {
       deletePost(postId);
+    },
+    deleteComment: (commentId) => {
+      deleteComment(commentId);
     },
     loginUser: (userData, props) => {
       loginUser(userData, props);

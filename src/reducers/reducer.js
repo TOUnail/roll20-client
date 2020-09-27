@@ -140,6 +140,23 @@ const GlobalReducer = (state, action) => {
       return {
         ...state,
       };
+    case "DELETE_COMMENT":
+      let deleteCommentIndex = state.post.comments.findIndex(
+        (comment) => comment.commentId === action.payload.commentId
+      );
+      let postsIndex = state.posts.findIndex(
+        (post) => post.postId === action.payload.postData.postId
+      );
+      state.post.comments.splice(deleteCommentIndex, 1);
+      state.posts[postsIndex] = action.payload.postData;
+      //console.log(action.payload.commentCount);
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          commentCount: action.payload.commentCount,
+        },
+      };
     default:
       return state;
   }
