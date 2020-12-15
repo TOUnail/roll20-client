@@ -347,31 +347,29 @@ const Store = ({ children }) => {
       console.log(err);
     }
   };
-  // const getPosts = useCallback(async () => {
-  //   // try {
-  //   dispatch({ type: "LOADING_DATA" });
-  //   console.log("try fetch");
-  //   dispatch({ type: "SET_POSTS", payload: ["test"] });
-  //   // const response = await fetch("/posts");
-  //   // response
-  //   //   .json()
-  //   //   .then((res) => {
-  //   //     dispatch({
-  //   //       type: "SET_POSTS",
-  //   //       payload: res,
-  //   //     });
-  //   //   })
-  //   //   .catch((err) => {
-  //   //     dispatch({
-  //   //       type: "SET_POSTS",
-  //   //       payload: [],
-  //   //     });
-  //   //     console.log(err);
-  //   //   });
-  //   // } catch (err) {
-  //   //   console.log(err);
-  //   // }
-  // }, []);
+  const postComment = async (postId, commentData) => {
+    try {
+      const token = localStorage.FBIdToken;
+      const response = await fetch(`/post/${postId}/comment`, {
+        credentials: "include",
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: token,
+        },
+        body: JSON.stringify(commentData),
+      });
+      response.json().then((res) => {
+        dispatch({ type: "ADD_COMMENT", payload: res });
+        dispatch({
+          type: "CLEAR_ERRORS",
+        });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const value = {
     authenticated: state.authenticated,
     credentials: state.credentials,
@@ -424,6 +422,9 @@ const Store = ({ children }) => {
     },
     editUserDetails: (userDetails) => {
       editUserDetails(userDetails);
+    },
+    postComment: (postId, commentData) => {
+      postComment(postId, commentData);
     },
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;

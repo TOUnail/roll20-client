@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import LikePost from "../components/post/LikePost";
 import Comments from "../components/post/Comments";
+import CommentForm from "../components/post/CommentForm";
 import { Link } from "react-router-dom";
 import Context from "../context/Context";
 import dayjs from "dayjs";
@@ -39,7 +40,7 @@ const Post = (props) => {
         <Fragment>
           {!context.loadingUI ? (
             <Fragment>
-              <div className="shadow bg-white px-4 pt-2 my-2 sm:rounded-lg leading-normal relative">
+              <div className="shadow bg-white px-4 pt-2 my-2 sm:rounded-lg leading-normal relative z-20">
                 <button
                   className="rounded-full mb-2 p-2 flex items-center justify-center text-primary-600 hover:bg-gray-300 focus:outline-none"
                   onClick={props.history.goBack}
@@ -60,6 +61,8 @@ const Post = (props) => {
                         <strong>{context.post.userHandle}</strong>
                       </Link>{" "}
                       rolled a {context.post.roll}
+                      <br />
+                      {context.post.rollNeeded}
                     </p>
                   </div>
                 </div>
@@ -102,6 +105,7 @@ const Post = (props) => {
                 </div>
               </div>
               <Comments comments={context.post.comments} />
+              {context.authenticated && <CommentForm postId={postId} />}
             </Fragment>
           ) : (
             <p>loading</p>

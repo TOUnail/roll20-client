@@ -6,12 +6,30 @@ import Context from "../../context/Context";
 import { Link, useHistory } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import updateLocale from "dayjs/plugin/updateLocale";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentAlt } from "pro-regular-svg-icons/faCommentAlt";
+import { faHexagon } from "pro-solid-svg-icons/faHexagon";
 
 const Post = (props) => {
   dayjs.extend(relativeTime);
+  dayjs.extend(updateLocale);
+  dayjs.updateLocale("en", {
+    relativeTime: {
+      future: "%s",
+      past: "%s",
+      s: "a few seconds",
+      m: "1m",
+      mm: "%dm",
+      h: "1h",
+      hh: "%dh",
+      d: "1d",
+      dd: "%dd",
+      M: "1mo",
+      MM: "%dmo",
+    },
+  });
   const postContext = useContext(Context);
   let history = useHistory();
   const {
@@ -24,6 +42,7 @@ const Post = (props) => {
       likeCount,
       commentCount,
       roll,
+      rollNeeded,
     },
   } = props;
   // const { open, toggleModal } = useModal();
@@ -38,6 +57,61 @@ const Post = (props) => {
     postContext.credentials.handle === props.post.userHandle ? (
       <DeletePost postId={postId} />
     ) : null;
+  const rollResult = (roll, rollNeeded) => {
+    if (roll >= rollNeeded) {
+      if (roll === 20) {
+        return (
+          <Fragment>
+            <FontAwesomeIcon className="text-secondary-600" icon={faHexagon} />
+            <span
+              className="fa-layers-text text-white font-bold uppercase text-sm origin-left transform -rotate-45"
+              style={{ left: "0.9rem" }}
+            >
+              Crit
+            </span>
+          </Fragment>
+        );
+      } else {
+        return (
+          <Fragment>
+            <FontAwesomeIcon className="text-secondary-600" icon={faHexagon} />
+            <span
+              className="fa-layers-text text-white font-bold uppercase text-sm origin-left transform -rotate-45"
+              style={{ left: "0.9rem" }}
+            >
+              Pass
+            </span>
+          </Fragment>
+        );
+      }
+    } else {
+      if (roll === 1) {
+        return (
+          <Fragment>
+            <FontAwesomeIcon className="text-secondary-600" icon={faHexagon} />
+            <span
+              className="fa-layers-text text-white font-bold uppercase text-sm origin-left transform -rotate-45"
+              style={{ left: "0.9rem" }}
+            >
+              Crit
+            </span>
+          </Fragment>
+        );
+      } else {
+        return (
+          <Fragment>
+            <FontAwesomeIcon className="text-red-600" icon={faHexagon} />
+            <span
+              className="fa-layers-text text-white font-bold uppercase text-sm origin-left transform -rotate-45"
+              style={{ left: "0.9rem" }}
+            >
+              Miss
+            </span>
+          </Fragment>
+        );
+      }
+    }
+  };
   return (
     <Fragment>
       <div
@@ -60,25 +134,35 @@ const Post = (props) => {
           </Link>
           <div className="text-sm flex-1">
             <div className="flex items-center justify-between">
-              <p className="text-gray-900 font-bold leading-none">
+              <p className="text-gray-600">
                 <Link
                   onClick={(e) => e.stopPropagation()}
-                  className="hover:underline"
+                  className="text-gray-900 hover:underline font-bold leading-none"
                   to={`/users/${userHandle}`}
                 >
                   {userHandle}
                 </Link>{" "}
-                rolled a {roll}
+                {/* rolled a {roll} */}
+                &middot;{" "}
+                {dayjs(createdAt).isBefore(dayjs().subtract(1, "year"))
+                  ? dayjs(createdAt).format("MMM D, YYYY")
+                  : dayjs(createdAt).fromNow()}
               </p>
               {deleteButton}
             </div>
-            <p className="text-gray-600 text-xs">
-              {dayjs(createdAt).isBefore(dayjs().subtract(1, "year"))
-                ? dayjs(createdAt).format("MMM D, YYYY")
-                : dayjs(createdAt).fromNow()}
-            </p>
-            <p className={likeCount < 1 || commentCount < 1 ? "mb-3" : ""}>
-              <Fragment>{body}</Fragment>
+            <div className="flex items-center justify-between">
+              <p className="text-lg">{body}</p>
+              {/* <p className={likeCount < 1 || commentCount < 1 ? "mb-3" : ""}>
+                <Fragment>{body}</Fragment>
+              </p> */}
+              <div className="fa-3x">
+                <span className="fa-layers fa-fw">
+                  {rollResult(roll, rollNeeded)}
+                </span>
+              </div>
+            </div>
+            <p>
+              {userHandle} rolled a {roll} needed a {rollNeeded} to pass
             </p>
             <div className="flex flex-row justify-end">
               {likeCount > 0 && (

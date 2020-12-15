@@ -19,7 +19,7 @@ const Comments = (props) => {
   return (
     <Fragment>
       {comments && comments.length > 0 && (
-        <div className="shadow bg-white pt-4 px-4 -mt-4 sm:rounded-b-lg leading-normal">
+        <div className="shadow bg-white pt-4 px-4 -mt-4 sm:rounded-b-lg leading-normal relative z-10">
           {comments.map((comment, index) => {
             const {
               body,

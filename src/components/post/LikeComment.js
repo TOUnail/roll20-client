@@ -23,7 +23,7 @@ const LikeComment = (props) => {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="bg-transparent text-center w-full hover:bg-red-100 text-gray-800 font-semibold h-10 w-10 rounded-full"
+        className="bg-transparent flex text-center justify-center items-center hover:bg-red-100 hover:text-red-800 text-gray-800 font-semibold h-10 w-10 rounded-full"
       >
         <FontAwesomeIcon icon={faHeart} />
       </Link>
@@ -34,7 +34,7 @@ const LikeComment = (props) => {
         e.stopPropagation();
         likeContent.unlikeComment(props.commentId);
       }}
-      className="bg-transparent hover:bg-red-100 focus:outline-none text-gray-800 font-semibold h-10 w-10 rounded-full"
+      className="bg-transparent hover:bg-red-100 hover:text-red-800 focus:outline-none text-gray-800 font-semibold h-10 w-10 rounded-full"
     >
       <FontAwesomeIcon icon={faFilledHeart} />
     </button>
@@ -44,7 +44,7 @@ const LikeComment = (props) => {
         e.stopPropagation();
         likeContent.likeComment(props.commentId);
       }}
-      className="bg-transparent hover:bg-red-100 focus:outline-none text-gray-800 font-semibold h-10 w-10 rounded-full"
+      className="bg-transparent hover:bg-red-100 hover:text-red-800 focus:outline-none text-gray-800 font-semibold h-10 w-10 rounded-full"
     >
       <FontAwesomeIcon icon={faHeart} />
     </button>

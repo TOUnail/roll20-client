@@ -83,6 +83,15 @@ const GlobalReducer = (state, action) => {
           },
         ],
       };
+    case "ADD_COMMENT":
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: [...state.post.comments, action.payload],
+        },
+      };
+
     case "UNLIKE_POST":
       let unlikeIndex = state.posts.findIndex(
         (post) => post.postId === action.payload.postInfo.postId
@@ -147,9 +156,11 @@ const GlobalReducer = (state, action) => {
       let postsIndex = state.posts.findIndex(
         (post) => post.postId === action.payload.postData.postId
       );
+      // console.log("commentIndex");
+      // console.log(deleteCommentIndex);
       state.post.comments.splice(deleteCommentIndex, 1);
       state.posts[postsIndex] = action.payload.postData;
-      //console.log(action.payload.commentCount);
+      //console.log(action.payload);
       return {
         ...state,
         post: {

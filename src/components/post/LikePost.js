@@ -23,7 +23,7 @@ const LikePost = (props) => {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="bg-transparent text-center w-full hover:bg-red-100 text-gray-800 font-semibold py-1"
+        className="bg-transparent text-center w-full hover:bg-red-100 hover:text-red-800 text-gray-800 font-semibold py-1"
       >
         <FontAwesomeIcon icon={faHeart} /> Like
       </Link>
@@ -34,7 +34,7 @@ const LikePost = (props) => {
         e.stopPropagation();
         likeContent.unlikePost(props.postId);
       }}
-      className="bg-transparent w-full hover:bg-red-100 focus:outline-none text-gray-800 font-semibold py-1"
+      className="bg-transparent w-full hover:bg-red-100 hover:text-red-800 focus:outline-none text-gray-800 font-semibold py-1"
     >
       <FontAwesomeIcon icon={faFilledHeart} /> Unlike
     </button>
@@ -44,7 +44,7 @@ const LikePost = (props) => {
         e.stopPropagation();
         likeContent.likePost(props.postId);
       }}
-      className="bg-transparent w-full hover:bg-red-100 focus:outline-none text-gray-800 font-semibold py-1"
+      className="bg-transparent w-full hover:bg-red-100 hover:text-red-800 focus:outline-none text-gray-800 font-semibold py-1"
     >
       <FontAwesomeIcon icon={faHeart} /> Like
     </button>
