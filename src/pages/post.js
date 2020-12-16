@@ -12,14 +12,32 @@ import { Link } from "react-router-dom";
 import Context from "../context/Context";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import updateLocale from "dayjs/plugin/updateLocale";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "pro-regular-svg-icons/faArrowLeft";
 import { faCommentAlt } from "pro-regular-svg-icons/faCommentAlt";
+import { faHexagon } from "pro-solid-svg-icons/faHexagon";
 
 const Post = (props) => {
   const [mount, setMount] = useState(false);
   dayjs.extend(relativeTime);
+  dayjs.extend(updateLocale);
+  dayjs.updateLocale("en", {
+    relativeTime: {
+      future: "%s",
+      past: "%s",
+      s: "a few seconds",
+      m: "1m",
+      mm: "%dm",
+      h: "1h",
+      hh: "%dh",
+      d: "1d",
+      dd: "%dd",
+      M: "1mo",
+      MM: "%dmo",
+    },
+  });
   const singlePost = useContext(Context);
   const { postId } = props.match.params;
   const fetchPost = useCallback(
@@ -34,6 +52,61 @@ const Post = (props) => {
       fetchPost(postId);
     }
   }, [mount, fetchPost, postId]);
+  const rollResult = (roll, rollNeeded) => {
+    if (roll >= rollNeeded) {
+      if (roll === 20) {
+        return (
+          <Fragment>
+            <FontAwesomeIcon className="text-secondary-600" icon={faHexagon} />
+            <span
+              className="fa-layers-text text-white font-bold uppercase text-sm origin-left transform -rotate-45"
+              style={{ left: "1.1rem" }}
+            >
+              Crit
+            </span>
+          </Fragment>
+        );
+      } else {
+        return (
+          <Fragment>
+            <FontAwesomeIcon className="text-secondary-600" icon={faHexagon} />
+            <span
+              className="fa-layers-text text-white font-bold uppercase text-sm origin-left transform -rotate-45"
+              style={{ left: "1.1rem" }}
+            >
+              Pass
+            </span>
+          </Fragment>
+        );
+      }
+    } else {
+      if (roll === 1) {
+        return (
+          <Fragment>
+            <FontAwesomeIcon className="text-secondary-600" icon={faHexagon} />
+            <span
+              className="fa-layers-text text-white font-bold uppercase text-sm origin-left transform -rotate-45"
+              style={{ left: "1.1rem" }}
+            >
+              Crit
+            </span>
+          </Fragment>
+        );
+      } else {
+        return (
+          <Fragment>
+            <FontAwesomeIcon className="text-red-600" icon={faHexagon} />
+            <span
+              className="fa-layers-text text-white font-bold uppercase text-sm origin-left transform -rotate-45"
+              style={{ left: "1.1rem" }}
+            >
+              Miss
+            </span>
+          </Fragment>
+        );
+      }
+    }
+  };
   return (
     <Context.Consumer>
       {(context) => (
@@ -60,23 +133,35 @@ const Post = (props) => {
                       <Link to={`/user/${context.post.userHandle}`}>
                         <strong>{context.post.userHandle}</strong>
                       </Link>{" "}
-                      rolled a {context.post.roll}
+                      &middot;{" "}
+                      <span className="text-gray-600 text-xs">
+                        {dayjs(context.post.createdAt).isBefore(
+                          dayjs().subtract(1, "year")
+                        )
+                          ? dayjs(context.post.createdAt).format("MMM D, YYYY")
+                          : dayjs(context.post.createdAt).fromNow()}
+                      </span>
+                      {/* rolled a {context.post.roll}
                       <br />
-                      {context.post.rollNeeded}
+                      {context.post.rollNeeded} */}
                     </p>
                   </div>
                 </div>
-                <p className="text-2xl mb-2">{context.post.body}</p>
+                <div className="flex items-center justify-between">
+                  <p className="text-2xl">{context.post.body}</p>
+                  <div className="fa-3x">
+                    <span className="fa-layers fa-fw">
+                      {rollResult(context.post.roll, context.post.rollNeeded)}
+                    </span>
+                  </div>
+                </div>
                 <div className="flex flex-row justify-between items-baseline">
                   <div>
-                    <p className="text-gray-600 text-xs">
-                      {dayjs(context.post.createdAt).isBefore(
-                        dayjs().subtract(1, "year")
-                      )
-                        ? dayjs(context.post.createdAt).format("MMM D, YYYY")
-                        : dayjs(context.post.createdAt).fromNow()}
+                    <p>
+                    {context.post.userHandle} rolled a {context.post.roll} needed a {context.post.rollNeeded} to pass
                     </p>
                   </div>
+
                   <div>
                     {context.post.likeCount > 0 && (
                       <p

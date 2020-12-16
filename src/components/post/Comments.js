@@ -41,7 +41,7 @@ const Comments = (props) => {
                   <div className="w-full">
                     <div className="flex items-center justify-between">
                       <p>
-                        <strong className="mr-1">
+                        <strong>
                           <Link
                             className="cursor-pointer"
                             to={`/user/${userHandle}`}
@@ -49,7 +49,13 @@ const Comments = (props) => {
                             {userHandle}
                           </Link>
                         </strong>{" "}
-                        {body}
+                      &middot;{" "}
+                        <span className="text-xs text-gray-600">
+                        {dayjs(createdAt).isBefore(dayjs().subtract(1, "year"))
+                          ? dayjs(createdAt).format("MMM D, YYYY")
+                          : dayjs(createdAt).fromNow()}
+                      </span>
+                        {/* {body} */}
                       </p>
                       {commentContext.authenticated &&
                       commentContext.credentials.handle === userHandle ? (
@@ -60,16 +66,21 @@ const Comments = (props) => {
                       </button> */}
                     </div>
                     <div className="flex">
-                      <p className="text-xs text-gray-600">
+                      {/* <p className="text-xs text-gray-600">
                         {dayjs(createdAt).isBefore(dayjs().subtract(1, "year"))
                           ? dayjs(createdAt).format("MMM D, YYYY")
                           : dayjs(createdAt).fromNow()}
-                      </p>
-                      <p className="text-xs text-gray-600 ml-2">
-                        {likeCount} Likes
-                      </p>
+                      </p> */}
                     </div>
-                    <LikeComment commentId={commentId} />
+                    <p>{body}</p>
+                    <div className="flex items-center justify-between">
+                      <LikeComment commentId={commentId} />
+                      {likeCount > 0 &&
+                        <p className="text-xs text-gray-600 ml-2">
+                          {likeCount} Like{likeCount > 1 ? "s" : ""}
+                        </p>
+                      }
+                    </div>
                   </div>
                 </div>
               </Fragment>
