@@ -3,20 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.30",
-    "@fortawesome/react-fontawesome": "^0.1.11",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/react-fontawesome": "^0.1.13",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "dayjs": "^1.8.35",
+    "dayjs": "^1.9.7",
     "jwt-decode": "^2.2.0",
-    "pro-duotone-svg-icons": "^5.14.0",
-    "pro-regular-svg-icons": "^5.14.0",
-    "pro-solid-svg-icons": "^5.14.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "pro-duotone-svg-icons": "^5.15.1",
+    "pro-regular-svg-icons": "^5.15.1",
+    "pro-solid-svg-icons": "^5.15.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.3"
+    "react-scripts": "^3.4.4"
   },
   "scripts": {
     "start": "npm run watch:css && react-scripts start",
@@ -44,7 +44,7 @@
   "devDependencies": {
     "autoprefixer": "^9.8.6",
     "postcss-cli": "^7.1.2",
-    "tailwindcss": "^1.8.7"
+    "tailwindcss": "^1.9.6"
   },
   "proxy": "https://us-central1-roll20-a9af4.cloudfunctions.net/api"
 }
