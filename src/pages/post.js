@@ -9,6 +9,7 @@ import LikePost from "../components/post/LikePost";
 import Comments from "../components/post/Comments";
 import CommentForm from "../components/post/CommentForm";
 import { Link } from "react-router-dom";
+import Profile from "../components/profile/Profile";
 import Context from "../context/Context";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -111,6 +112,7 @@ const Post = (props) => {
     <Context.Consumer>
       {(context) => (
         <Fragment>
+          <div className="col-span-1 md:col-span-2 post-lists relative">
           {!context.loadingUI ? (
             <Fragment>
               <div className="shadow bg-white px-4 pt-2 my-2 sm:rounded-lg leading-normal relative z-20">
@@ -195,6 +197,11 @@ const Post = (props) => {
           ) : (
             <p>loading</p>
           )}
+          </div>
+
+          <div className="col-span-1">
+            <Profile />
+          </div>
         </Fragment>
       )}
     </Context.Consumer>

@@ -183,12 +183,13 @@ const Post = (props) => {
             <hr />
             <div className="flex justify-around">
               <LikePost postId={postId} />
-              <button
+              <Link
+                to={`/post/${postId}`}
                 onClick={(e) => e.stopPropagation()}
                 className="bg-transparent w-full hover:bg-blue-100 focus:outline-none text-gray-800 font-semibold py-1"
               >
                 <FontAwesomeIcon icon={faCommentAlt} /> Comment
-              </button>
+              </Link>
             </div>
           </div>
         </div>

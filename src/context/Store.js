@@ -30,32 +30,31 @@ const Store = ({ children }) => {
         getUserData(token);
       }
     }
-    const getPosts = async () => {
-      try {
-        dispatch({ type: "LOADING_DATA" });
-        const response = await fetch("/posts");
-        response
-          .json()
-          .then((res) => {
-            dispatch({
-              type: "SET_POSTS",
-              payload: res,
-            });
-          })
-          .catch((err) => {
-            dispatch({
-              type: "SET_POSTS",
-              payload: [],
-            });
-            console.log(err);
-          });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getPosts();
+    
   }, []);
-
+  const getPosts = async () => {
+    try {
+      dispatch({ type: "LOADING_DATA" });
+      const response = await fetch("/posts");
+      response
+        .json()
+        .then((res) => {
+          dispatch({
+            type: "SET_POSTS",
+            payload: res,
+          });
+        })
+        .catch((err) => {
+          dispatch({
+            type: "SET_POSTS",
+            payload: [],
+          });
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const setAuthorizationHeader = (token) => {
     const FBIdToken = `Bearer ${token}`;
     localStorage.setItem("FBIdToken", FBIdToken);
@@ -162,6 +161,23 @@ const Store = ({ children }) => {
       console.log(err);
     }
   };
+  const getUserPageData = async (userHandle) => {
+    try {
+      const response = await fetch(`/user/${userHandle}`);
+      response.json()
+        .then(res => {
+          dispatch({
+            type: "SET_POSTS",
+            payload: res.userInfo.posts
+          })
+        })
+    } catch (err) {
+      dispatch({
+        type: "SET_POSTS",
+        payload: null
+      })
+    }
+  }
   const addPost = async (newPost) => {
     try {
       dispatch({ type: "LOADING_UI" });
@@ -370,6 +386,7 @@ const Store = ({ children }) => {
       console.log(err);
     }
   };
+  
   const value = {
     authenticated: state.authenticated,
     credentials: state.credentials,
@@ -384,6 +401,9 @@ const Store = ({ children }) => {
     // getPosts: () => {
     //   getPosts();
     // },
+    getPosts: () => {
+      getPosts();
+    },
     addPost: (newPost) => {
       addPost(newPost);
     },
@@ -426,6 +446,9 @@ const Store = ({ children }) => {
     postComment: (postId, commentData) => {
       postComment(postId, commentData);
     },
+    getUserPageData: (userHandle) => {
+      getUserPageData(userHandle);
+    }
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
