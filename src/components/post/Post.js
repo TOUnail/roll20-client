@@ -138,7 +138,7 @@ const Post = (props) => {
                 <Link
                   onClick={(e) => e.stopPropagation()}
                   className="text-gray-900 hover:underline font-bold leading-none"
-                  to={`/users/${userHandle}`}
+                  to={`/user/${userHandle}`}
                 >
                   {userHandle}
                 </Link>{" "}
@@ -186,7 +186,7 @@ const Post = (props) => {
               <Link
                 to={`/post/${postId}`}
                 onClick={(e) => e.stopPropagation()}
-                className="bg-transparent w-full hover:bg-blue-100 focus:outline-none text-gray-800 font-semibold py-1"
+                className="bg-transparent w-full hover:bg-blue-100 focus:outline-none text-gray-800 text-center font-semibold py-1"
               >
                 <FontAwesomeIcon icon={faCommentAlt} /> Comment
               </Link>

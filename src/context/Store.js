@@ -386,6 +386,28 @@ const Store = ({ children }) => {
       console.log(err);
     }
   };
+  const markNotificationsRead = async (notificationIds) => {
+    try {
+      const token = localStorage.FBIdToken;
+      const response = await fetch('/notifications', {
+        credentials: "include",
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: token,
+        },
+        body: JSON.stringify(notificationIds),
+      })
+      response.json().then(res => {
+        dispatch({
+          type: "MARK_NOTIFICATIONS_READ"
+        })
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
   
   const value = {
     authenticated: state.authenticated,
@@ -448,6 +470,9 @@ const Store = ({ children }) => {
     },
     getUserPageData: (userHandle) => {
       getUserPageData(userHandle);
+    },
+    markNotificationsRead: (notificationIds) => {
+      markNotificationsRead(notificationIds)
     }
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;

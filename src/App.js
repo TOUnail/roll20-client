@@ -50,7 +50,12 @@ function App() {
                 />
                 <Route
                   exact
-                  path="/users/:handle"
+                  path="/user/:handle"
+                  render={(props) => <User {...props} />}
+                />
+                <Route
+                  exact
+                  path="/user/:handle/post/:postId"
                   render={(props) => <User {...props} />}
                 />
                 {/*

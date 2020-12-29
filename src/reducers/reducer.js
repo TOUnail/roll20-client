@@ -168,6 +168,11 @@ const GlobalReducer = (state, action) => {
           commentCount: action.payload.commentCount,
         },
       };
+    case "MARK_NOTIFICATIONS_READ":
+      state.notifications.forEach(notification => notification.read = true);
+      return {
+        ...state
+      }
     default:
       return state;
   }

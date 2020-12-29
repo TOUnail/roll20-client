@@ -7,6 +7,7 @@ import React, {
 } from "react";
 
 import EditProfile from "../profile/EditProfile";
+import Notifications from "./Notifications";
 import Modal from "../Modal";
 import useModal from "../../util/useModal";
 import Context from "../../context/Context";
@@ -14,7 +15,6 @@ import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiceD20 } from "pro-duotone-svg-icons/faDiceD20";
-import { faBell } from "pro-solid-svg-icons/faBell";
 import { faCaretDown } from "pro-solid-svg-icons/faCaretDown";
 
 const Navbar = () => {
@@ -67,9 +67,10 @@ const Navbar = () => {
               {(context) =>
                 context.authenticated ? (
                   <Fragment>
-                    <button className="px-3">
+                    <Notifications />
+                    {/* <button className="px-3">
                       <FontAwesomeIcon icon={faBell} />
-                    </button>
+                    </button> */}
                     <div className="relative" ref={dropdownRef}>
                       <button
                         className="px-3 focus:outline-none"
