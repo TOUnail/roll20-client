@@ -45,6 +45,7 @@ function App() {
                   <Home />
                 </Route>
                 <Route
+                  exact
                   path="/post/:postId"
                   render={(props) => <Post {...props} />}
                 />

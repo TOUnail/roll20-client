@@ -22,6 +22,7 @@ import { faHexagon } from "pro-solid-svg-icons/faHexagon";
 
 const Post = (props) => {
   const [mount, setMount] = useState(false);
+  const [id, setId] = useState("");
   dayjs.extend(relativeTime);
   dayjs.extend(updateLocale);
   dayjs.updateLocale("en", {
@@ -49,10 +50,16 @@ const Post = (props) => {
   );
   useEffect(() => {
     if (!mount) {
+      setId(postId);
       setMount(true);
       fetchPost(postId);
     }
-  }, [mount, fetchPost, postId]);
+    // if user goes from one post to another through notifications
+    if (id !== postId) {
+      setMount(false);
+    }
+  }, [mount, fetchPost, postId, id]);
+
   const rollResult = (roll, rollNeeded) => {
     if (roll >= rollNeeded) {
       if (roll === 20) {
@@ -113,90 +120,93 @@ const Post = (props) => {
       {(context) => (
         <Fragment>
           <div className="col-span-1 md:col-span-2 post-lists relative">
-          {!context.loadingUI ? (
-            <Fragment>
-              <div className="shadow bg-white px-4 pt-2 my-2 sm:rounded-lg leading-normal relative z-20">
-                <button
-                  className="rounded-full mb-2 p-2 flex items-center justify-center text-primary-600 hover:bg-gray-300 focus:outline-none"
-                  onClick={props.history.goBack}
-                >
-                  <FontAwesomeIcon icon={faArrowLeft} />
-                  <span className="sr-only">Back</span>
-                </button>
-                <hr className="-mx-4" />
-                <div className="flex mt-3">
-                  <img
-                    className="w-10 h-10 rounded-full object-cover"
-                    src={context.post.userImage}
-                    alt={`${context.post.userHandle}`}
-                  />
-                  <div className="text-left ml-3">
-                    <p className="text-gray-900 leading-none">
-                      <Link to={`/user/${context.post.userHandle}`}>
-                        <strong>{context.post.userHandle}</strong>
-                      </Link>{" "}
-                      &middot;{" "}
-                      <span className="text-gray-600 text-xs">
-                        {dayjs(context.post.createdAt).isBefore(
-                          dayjs().subtract(1, "year")
-                        )
-                          ? dayjs(context.post.createdAt).format("MMM D, YYYY")
-                          : dayjs(context.post.createdAt).fromNow()}
-                      </span>
-                      {/* rolled a {context.post.roll}
+            {!context.loadingUI ? (
+              <Fragment>
+                <div className="shadow bg-white px-4 pt-2 my-2 sm:rounded-lg leading-normal relative z-20">
+                  <button
+                    className="rounded-full mb-2 p-2 flex items-center justify-center text-primary-600 hover:bg-gray-300 focus:outline-none"
+                    onClick={props.history.goBack}
+                  >
+                    <FontAwesomeIcon icon={faArrowLeft} />
+                    <span className="sr-only">Back</span>
+                  </button>
+                  <hr className="-mx-4" />
+                  <div className="flex mt-3">
+                    <img
+                      className="w-10 h-10 rounded-full object-cover"
+                      src={context.post.userImage}
+                      alt={`${context.post.userHandle}`}
+                    />
+                    <div className="text-left ml-3">
+                      <p className="text-gray-900 leading-none">
+                        <Link to={`/user/${context.post.userHandle}`}>
+                          <strong>{context.post.userHandle}</strong>
+                        </Link>{" "}
+                        &middot;{" "}
+                        <span className="text-gray-600 text-xs">
+                          {dayjs(context.post.createdAt).isBefore(
+                            dayjs().subtract(1, "year")
+                          )
+                            ? dayjs(context.post.createdAt).format(
+                                "MMM D, YYYY"
+                              )
+                            : dayjs(context.post.createdAt).fromNow()}
+                        </span>
+                        {/* rolled a {context.post.roll}
                       <br />
                       {context.post.rollNeeded} */}
-                    </p>
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className="text-2xl">{context.post.body}</p>
-                  <div className="fa-3x">
-                    <span className="fa-layers fa-fw">
-                      {rollResult(context.post.roll, context.post.rollNeeded)}
-                    </span>
+                  <div className="flex items-center justify-between">
+                    <p className="text-2xl">{context.post.body}</p>
+                    <div className="fa-3x">
+                      <span className="fa-layers fa-fw">
+                        {rollResult(context.post.roll, context.post.rollNeeded)}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-row justify-between items-baseline">
-                  <div>
-                    <p>
-                    {context.post.userHandle} rolled a {context.post.roll} needed a {context.post.rollNeeded} to pass
-                    </p>
-                  </div>
+                  <div className="flex flex-row justify-between items-baseline">
+                    <div>
+                      <p>
+                        {context.post.userHandle} rolled a {context.post.roll}{" "}
+                        needed a {context.post.rollNeeded} to pass
+                      </p>
+                    </div>
 
-                  <div>
-                    {context.post.likeCount > 0 && (
-                      <p
-                        className={`text-xs text-gray-600${
-                          context.post.commentCount > 0 ? " mr-3" : ""
-                        }`}
-                      >
-                        {context.post.likeCount} Like
-                        {context.post.likeCount > 1 ? "s" : ""}
-                      </p>
-                    )}
-                    {context.post.commentCount > 0 && (
-                      <p className="text-xs text-gray-600">
-                        {context.post.commentCount} Comment
-                        {context.post.commentCount > 1 ? "s" : ""}
-                      </p>
-                    )}
+                    <div>
+                      {context.post.likeCount > 0 && (
+                        <p
+                          className={`text-xs text-gray-600${
+                            context.post.commentCount > 0 ? " mr-3" : ""
+                          }`}
+                        >
+                          {context.post.likeCount} Like
+                          {context.post.likeCount > 1 ? "s" : ""}
+                        </p>
+                      )}
+                      {context.post.commentCount > 0 && (
+                        <p className="text-xs text-gray-600">
+                          {context.post.commentCount} Comment
+                          {context.post.commentCount > 1 ? "s" : ""}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <hr />
+                  <div className="flex justify-around">
+                    <LikePost postId={postId} />
+                    <button className="bg-transparent w-full hover:bg-blue-100 focus:outline-none text-gray-800 font-semibold py-1">
+                      <FontAwesomeIcon icon={faCommentAlt} /> Comment
+                    </button>
                   </div>
                 </div>
-                <hr />
-                <div className="flex justify-around">
-                  <LikePost postId={postId} />
-                  <button className="bg-transparent w-full hover:bg-blue-100 focus:outline-none text-gray-800 font-semibold py-1">
-                    <FontAwesomeIcon icon={faCommentAlt} /> Comment
-                  </button>
-                </div>
-              </div>
-              <Comments comments={context.post.comments} />
-              {context.authenticated && <CommentForm postId={postId} />}
-            </Fragment>
-          ) : (
-            <p>loading</p>
-          )}
+                <Comments comments={context.post.comments} />
+                {context.authenticated && <CommentForm postId={postId} />}
+              </Fragment>
+            ) : (
+              <p>loading</p>
+            )}
           </div>
 
           <div className="col-span-1">
