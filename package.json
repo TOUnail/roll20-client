@@ -4,11 +4,11 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
-    "@fortawesome/react-fontawesome": "^0.1.13",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "dayjs": "^1.9.7",
+    "dayjs": "^1.10.2",
     "jwt-decode": "^2.2.0",
     "pro-duotone-svg-icons": "^5.15.1",
     "pro-regular-svg-icons": "^5.15.1",
