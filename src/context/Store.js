@@ -30,7 +30,6 @@ const Store = ({ children }) => {
         getUserData(token);
       }
     }
-    
   }, []);
   const getPosts = async () => {
     try {
@@ -164,20 +163,19 @@ const Store = ({ children }) => {
   const getUserPageData = async (userHandle) => {
     try {
       const response = await fetch(`/user/${userHandle}`);
-      response.json()
-        .then(res => {
-          dispatch({
-            type: "SET_POSTS",
-            payload: res.userInfo.posts
-          })
-        })
+      response.json().then((res) => {
+        dispatch({
+          type: "SET_POSTS",
+          payload: res.userInfo.posts,
+        });
+      });
     } catch (err) {
       dispatch({
         type: "SET_POSTS",
-        payload: null
-      })
+        payload: null,
+      });
     }
-  }
+  };
   const addPost = async (newPost) => {
     try {
       dispatch({ type: "LOADING_UI" });
@@ -389,7 +387,7 @@ const Store = ({ children }) => {
   const markNotificationsRead = async (notificationIds) => {
     try {
       const token = localStorage.FBIdToken;
-      const response = await fetch('/notifications', {
+      const response = await fetch("/notifications", {
         credentials: "include",
         method: "post",
         headers: {
@@ -398,17 +396,17 @@ const Store = ({ children }) => {
           Authorization: token,
         },
         body: JSON.stringify(notificationIds),
-      })
-      response.json().then(res => {
+      });
+      response.json().then((res) => {
         dispatch({
-          type: "MARK_NOTIFICATIONS_READ"
-        })
-      })
+          type: "MARK_NOTIFICATIONS_READ",
+        });
+      });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-  
+  };
+
   const value = {
     authenticated: state.authenticated,
     credentials: state.credentials,
@@ -472,8 +470,8 @@ const Store = ({ children }) => {
       getUserPageData(userHandle);
     },
     markNotificationsRead: (notificationIds) => {
-      markNotificationsRead(notificationIds)
-    }
+      markNotificationsRead(notificationIds);
+    },
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
