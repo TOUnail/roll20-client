@@ -38,6 +38,17 @@ const Navbar = () => {
     navbar.logoutUser();
     toggleIsMenuOpen(false);
   };
+  const handleImageChange = (e) => {
+    const image = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+    navbar.uploadImage(formData);
+  };
+  const handleEditPicture = () => {
+    const fileInput = document.getElementById("imageInput");
+    fileInput.click();
+    toggleIsMenuOpen(false);
+  };
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -59,7 +70,7 @@ const Navbar = () => {
               }}
             />
             <span className="font-semibold text-xl tracking-light text-gray-200">
-              Logo
+              Natural20
             </span>
           </Link>
           <div className="flex items-center text-white">
@@ -83,8 +94,20 @@ const Navbar = () => {
                       </button>
                       {isMenuOpen && (
                         <div
-                          className={`w-32 mt-3 py-1 absolute right-0 bg-white shadow-xl`}
+                          className={`w-48 md:w-32 mt-3 py-1 absolute right-0 bg-white shadow-xl`}
                         >
+                          <input
+                            type="file"
+                            id="imageInput"
+                            hidden="hidden"
+                            onChange={handleImageChange}
+                          />
+                          <button
+                            onClick={() => handleEditPicture()}
+                            className="block text-gray-800 px-4 py-1 w-full focus:outline-none hover:bg-primary-800 hover:text-white md:hidden"
+                          >
+                            Change Profile Image
+                          </button>
                           <button
                             onClick={() => editProfile()}
                             className="block text-gray-800 px-4 py-1 w-full focus:outline-none hover:bg-primary-800 hover:text-white"

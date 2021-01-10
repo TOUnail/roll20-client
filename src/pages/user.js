@@ -11,6 +11,9 @@ import CommentForm from "../components/post/CommentForm";
 
 import LikePost from "../components/post/LikePost";
 
+import PostSkeleton from "../util/PostSkeleton";
+import ProfileSkeleton from "../util/ProfileSkeleton";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "pro-regular-svg-icons/faArrowLeft";
 import { faCommentAlt } from "pro-regular-svg-icons/faCommentAlt";
@@ -119,9 +122,16 @@ const User = (props) => {
     <Context.Consumer>
       {(context) => (
         <Fragment>
-          <div className="col-span-1 md:col-span-2 post-lists relative">
+          <div className="col-span-1 md:order-last">
+            {profile === null ? (
+              <ProfileSkeleton />
+            ) : (
+              <StaticProfile profile={profile} />
+            )}
+          </div>
+          <div className="col-span-1 md:order-first md:col-span-2 post-lists relative">
             {context.loadingUI ? (
-              <div>loading</div>
+              <PostSkeleton />
             ) : context.posts === null ? (
               <div>No posts from this user</div>
             ) : !postIdParam ? (
@@ -212,13 +222,6 @@ const User = (props) => {
               </Fragment>
             ) : (
               <div>Post was not found or deleted from this user</div>
-            )}
-          </div>
-          <div className="col-span-1">
-            {profile === null ? (
-              <p>Loading profile</p>
-            ) : (
-              <StaticProfile profile={profile} />
             )}
           </div>
         </Fragment>

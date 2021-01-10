@@ -2,8 +2,9 @@ import React, { useContext } from "react";
 import Context from "../../context/Context";
 import { Link } from "react-router-dom";
 
+import ProfileSkeleton from "../../util/ProfileSkeleton";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "pro-regular-svg-icons/faSpinner";
 import { faCameraAlt } from "pro-solid-svg-icons/faCameraAlt";
 
 const Profile = () => {
@@ -88,14 +89,7 @@ const Profile = () => {
             </div>
           )
         ) : (
-          <div className="text-center mt-4">
-            <FontAwesomeIcon
-              size="3x"
-              icon={faSpinner}
-              className="text-gray-400"
-              spin
-            />
-          </div>
+          <ProfileSkeleton />
         )
       }
     </Context.Consumer>

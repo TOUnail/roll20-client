@@ -15,6 +15,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
 
+import NoImg from "../images/no-img.png";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "pro-regular-svg-icons/faArrowLeft";
 import { faCommentAlt } from "pro-regular-svg-icons/faCommentAlt";
@@ -205,11 +207,38 @@ const Post = (props) => {
                 {context.authenticated && <CommentForm postId={postId} />}
               </Fragment>
             ) : (
-              <p>loading</p>
+              <div className="shadow bg-white px-4 pt-2 my-2 sm:rounded-lg leading-normal relative z-20">
+                <button
+                  className="rounded-full mb-2 p-2 flex items-center justify-center text-primary-600 hover:bg-gray-300 focus:outline-none"
+                  onClick={props.history.goBack}
+                >
+                  <FontAwesomeIcon icon={faArrowLeft} />
+                  <span className="sr-only">Back</span>
+                </button>
+                <hr className="-mx-4" />
+                <div className="flex mt-3">
+                  <img
+                    className="w-10 h-10 rounded-full object-cover"
+                    src={NoImg}
+                    alt="Loading"
+                  />
+                  <div className="ml-3">
+                    <div className="animate-pulse bg-gray-400 w-40 h-4 rounded-full" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="animate-pulse bg-gray-400 w-64 h-4 rounded-full my-8" />
+                </div>
+                <div className="flex justify-around">
+                  <div className="animate-pulse bg-gray-400 w-20 h-2 mt-10 mb-4 rounded-full" />
+
+                  <div className="animate-pulse bg-gray-400 w-20 h-2 mt-10 mb-4 rounded-full" />
+                </div>
+              </div>
             )}
           </div>
 
-          <div className="col-span-1">
+          <div className="col-span-1 hidden md:block">
             <Profile />
           </div>
         </Fragment>
