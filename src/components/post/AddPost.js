@@ -36,7 +36,7 @@ const AddPost = () => {
               </p>
               <div className="flex items-center">
                 <img
-                  src={context.credentials.userImage}
+                  src={context.credentials.imageUrl}
                   alt="profile"
                   className="w-10 h-10 rounded-full object-cover mr-4 cursor-pointer"
                 />
@@ -62,7 +62,7 @@ const AddPost = () => {
                       <p className="text-sm font-bold my-2">Create a post</p>
                       <div className="flex items-center">
                         <img
-                          src={context.credentials.userImage}
+                          src={context.credentials.imageUrl}
                           alt="profile"
                           className="w-10 h-10 rounded-full object-cover mr-4 cursor-pointer"
                         />

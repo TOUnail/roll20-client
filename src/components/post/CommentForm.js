@@ -36,7 +36,7 @@ const CommentForm = (props) => {
           <div className="flex items-center mt-3">
             <img
               className="w-10 h-10 rounded-full mr-4 object-cover"
-              src={context.credentials.userImage}
+              src={context.credentials.imageUrl}
               alt={context.credentials.handle}
             />
             <form className="w-full" onKeyPress={onEnterPress}>

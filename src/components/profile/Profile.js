@@ -28,7 +28,7 @@ const Profile = () => {
               <div className="shadow bg-white p-4 my-2 sm:rounded-lg flex flex-col justify-between leading-normal">
                 <div className="text-center">
                   <img
-                    src={context.credentials.userImage}
+                    src={context.credentials.imageUrl}
                     alt="profile"
                     className="rounded-full w-20 h-20 object-cover mx-auto -mb-6"
                   />
