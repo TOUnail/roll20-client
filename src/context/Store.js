@@ -3,6 +3,12 @@ import jwtDecode from "jwt-decode";
 import GlobalReducer from "../reducers/reducer";
 import Context from "./Context";
 
+import fetchAbsolute from "fetch-absolute";
+
+const fetchApi = fetchAbsolute(fetch)(
+  "https://us-central1-roll20-a9af4.cloudfunctions.net/api"
+);
+
 const initialState = {
   authenticated: false,
   posts: [],
@@ -34,7 +40,7 @@ const Store = ({ children }) => {
   const getPosts = async () => {
     try {
       dispatch({ type: "LOADING_DATA" });
-      const response = await fetch("/posts");
+      const response = await fetchApi("/posts");
       response
         .json()
         .then((res) => {
@@ -62,7 +68,7 @@ const Store = ({ children }) => {
   const loginUser = async (userData, history) => {
     try {
       dispatch({ type: "LOADING_UI" });
-      const response = await fetch("/login", {
+      const response = await fetchApi("/login", {
         credentials: "include",
         method: "post",
         headers: {
@@ -93,7 +99,7 @@ const Store = ({ children }) => {
   const signupUser = async (newUserData, history) => {
     try {
       dispatch({ type: "LOADING_UI" });
-      const response = await fetch("/signup", {
+      const response = await fetchApi("/signup", {
         credentials: "include",
         method: "post",
         headers: {
@@ -118,7 +124,7 @@ const Store = ({ children }) => {
   const getPost = async (postId) => {
     try {
       dispatch({ type: "LOADING_UI" });
-      const response = await fetch(`/post/${postId}`);
+      const response = await fetchApi(`/post/${postId}`);
       response.json().then((res) => {
         dispatch({
           type: "SET_POST",
@@ -135,7 +141,7 @@ const Store = ({ children }) => {
   const getUserData = async (token) => {
     try {
       dispatch({ type: "LOADING_USER" });
-      const response = await fetch("/user", {
+      const response = await fetchApi("/user", {
         credentials: "include",
         method: "get",
         headers: {
@@ -162,7 +168,7 @@ const Store = ({ children }) => {
   };
   const getUserPageData = async (userHandle) => {
     try {
-      const response = await fetch(`/user/${userHandle}`);
+      const response = await fetchApi(`/user/${userHandle}`);
       response.json().then((res) => {
         dispatch({
           type: "SET_POSTS",
@@ -180,7 +186,7 @@ const Store = ({ children }) => {
     try {
       dispatch({ type: "LOADING_UI" });
       const token = localStorage.FBIdToken;
-      const response = await fetch("/post", {
+      const response = await fetchApi("/post", {
         credentials: "include",
         method: "post",
         headers: {
@@ -210,7 +216,7 @@ const Store = ({ children }) => {
     try {
       dispatch({ type: "LOADING_USER" });
       const token = localStorage.FBIdToken;
-      await fetch("/user", {
+      await fetchApi("/user", {
         credentials: "include",
         method: "post",
         headers: {
@@ -230,7 +236,7 @@ const Store = ({ children }) => {
     try {
       dispatch({ type: "LOADING_USER" });
       const token = localStorage.FBIdToken;
-      await fetch("/user/image", {
+      await fetchApi("/user/image", {
         credentials: "include",
         method: "post",
         headers: {
@@ -248,7 +254,7 @@ const Store = ({ children }) => {
     try {
       const token = localStorage.FBIdToken;
 
-      const response = await fetch(`/post/${postId}/like`, {
+      const response = await fetchApi(`/post/${postId}/like`, {
         credentials: "include",
         method: "get",
         headers: {
@@ -267,7 +273,7 @@ const Store = ({ children }) => {
   const unlikePost = async (postId) => {
     try {
       const token = localStorage.FBIdToken;
-      const response = await fetch(`/post/${postId}/unlike`, {
+      const response = await fetchApi(`/post/${postId}/unlike`, {
         credentials: "include",
         method: "get",
         headers: {
@@ -288,7 +294,7 @@ const Store = ({ children }) => {
     try {
       const token = localStorage.FBIdToken;
 
-      const response = await fetch(`/comment/${commentId}/like`, {
+      const response = await fetchApi(`/comment/${commentId}/like`, {
         credentials: "include",
         method: "get",
         headers: {
@@ -307,7 +313,7 @@ const Store = ({ children }) => {
   const unlikeComment = async (commentId) => {
     try {
       const token = localStorage.FBIdToken;
-      const response = await fetch(`/comment/${commentId}/unlike`, {
+      const response = await fetchApi(`/comment/${commentId}/unlike`, {
         credentials: "include",
         method: "get",
         headers: {
@@ -326,7 +332,7 @@ const Store = ({ children }) => {
   const deletePost = async (postId) => {
     try {
       const token = localStorage.FBIdToken;
-      const response = await fetch(`/post/${postId}`, {
+      const response = await fetchApi(`/post/${postId}`, {
         credentials: "include",
         method: "delete",
         headers: {
@@ -345,7 +351,7 @@ const Store = ({ children }) => {
   const deleteComment = async (commentId) => {
     try {
       const token = localStorage.FBIdToken;
-      const response = await fetch(`/comment/${commentId}`, {
+      const response = await fetchApi(`/comment/${commentId}`, {
         credentials: "include",
         method: "delete",
         headers: {
@@ -364,7 +370,7 @@ const Store = ({ children }) => {
   const postComment = async (postId, commentData) => {
     try {
       const token = localStorage.FBIdToken;
-      const response = await fetch(`/post/${postId}/comment`, {
+      const response = await fetchApi(`/post/${postId}/comment`, {
         credentials: "include",
         method: "post",
         headers: {
@@ -387,7 +393,7 @@ const Store = ({ children }) => {
   const markNotificationsRead = async (notificationIds) => {
     try {
       const token = localStorage.FBIdToken;
-      const response = await fetch("/notifications", {
+      const response = await fetchApi("/notifications", {
         credentials: "include",
         method: "post",
         headers: {

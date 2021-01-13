@@ -19,6 +19,12 @@ import { faArrowLeft } from "pro-regular-svg-icons/faArrowLeft";
 import { faCommentAlt } from "pro-regular-svg-icons/faCommentAlt";
 import { faHexagon } from "pro-solid-svg-icons/faHexagon";
 
+import fetchAbsolute from "fetch-absolute";
+
+const fetchApi = fetchAbsolute(fetch)(
+  "https://us-central1-roll20-a9af4.cloudfunctions.net/api"
+);
+
 const User = (props) => {
   const [mount, setMount] = useState(false);
   const [profile, setProfile] = useState(null);
@@ -53,7 +59,7 @@ const User = (props) => {
       }
       userPosts.getUserPageData(handle);
       // fetchUser(handle);
-      fetch(`/user/${handle}`)
+      fetchApi(`/user/${handle}`)
         .then((res) => res.json())
         .then((data) => {
           // console.log(data.userInfo.user);
