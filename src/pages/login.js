@@ -36,7 +36,7 @@ const Login = (props) => {
                   className="mr-2 text-primary-900"
                 />
                 <span className="font-semibold text-xl tracking-light text-gray-900">
-                  Logo
+                  Natural20
                 </span>
               </div>
               <div className="mb-2">

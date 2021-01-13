@@ -74,7 +74,7 @@ const Profile = () => {
             <div className="w-full">
               <div className="shadow bg-white p-4 my-2 sm:rounded-lg flex flex-col justify-between leading-normal">
                 <h2 className="text-lg">
-                  <strong>New to Nat20?</strong>
+                  <strong>New to Natural20?</strong>
                 </h2>
                 <p className="mb-2 text-sm">
                   Sign up now to start rolling crits.
