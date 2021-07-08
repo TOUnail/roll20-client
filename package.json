@@ -9,6 +9,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "dayjs": "^1.10.2",
+    "fetch-absolute": "^1.0.0",
     "jwt-decode": "^2.2.0",
     "pro-duotone-svg-icons": "^5.15.1",
     "pro-regular-svg-icons": "^5.15.1",

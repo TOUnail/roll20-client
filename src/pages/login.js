@@ -30,14 +30,16 @@ const Login = (props) => {
               className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
             >
               <div className="flex items-center justify-center mb-8">
-                <FontAwesomeIcon
-                  icon={faDiceD20}
-                  size="2x"
-                  className="mr-2 text-primary-900"
-                />
-                <span className="font-semibold text-xl tracking-light text-gray-900">
-                  Natural20
-                </span>
+                <Link to={"/"}>
+                  <FontAwesomeIcon
+                    icon={faDiceD20}
+                    size="2x"
+                    className="mr-2 text-primary-900"
+                  />
+                  <span className="font-semibold text-xl tracking-light text-gray-900">
+                    Natural20
+                  </span>
+                </Link>
               </div>
               <div className="mb-2">
                 <input
